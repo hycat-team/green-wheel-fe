@@ -181,6 +181,8 @@
         "expires_at": "Ngày hết hạn",
 
         "upload_first_then_back_image": "Vui lòng tải ảnh mặt trước trước, sau đó là ảnh mặt sau",
+        "invalid_paper_name_on_other_document": "Họ tên phải trùng với giấy tờ khác",
+        "invalid_paper_date_on_other_document": "Ngày sinh phải trùng với giấy tờ khác",
 
         "citizen_identity": "Căn cước công dân",
         "upload_citizen_identity": "Tải căn cước công dân",

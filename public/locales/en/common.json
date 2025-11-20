@@ -181,6 +181,8 @@
         "expires_at": "Expires at",
 
         "upload_first_then_back_image": "Please upload the front image first, followed by the back image",
+        "invalid_paper_name_on_other_document": "Name must be the same as other document",
+        "invalid_paper_date_on_other_document": "Date of birth must be the same as other document",
 
         "citizen_identity": "Cititzen Identity",
         "upload_citizen_identity": "Upload Cititzen Identity",
