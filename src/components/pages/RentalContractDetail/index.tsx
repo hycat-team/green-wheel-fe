@@ -21,7 +21,8 @@ import {
     useUserHelper,
     useNumber,
     useTokenStore,
-    useUpdateContractStatus
+    useUpdateContractStatus,
+    useGetBusinessVariables
 } from "@/hooks"
 import {
     Car,
@@ -39,7 +40,13 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import { useFormik } from "formik"
 import * as Yup from "yup"
 import { decodeJwt } from "@/utils/helpers/jwt"
-import { InvoiceType, RentalContractStatus, RoleName, VehicleChecklistType } from "@/constants/enum"
+import {
+    BusinessVariableKey,
+    InvoiceType,
+    RentalContractStatus,
+    RoleName,
+    VehicleChecklistType
+} from "@/constants/enum"
 import { ChecklistSection } from "./ChecklistSection"
 import { CreateInvoiceSection } from "./CreateInvoiceSection"
 import { HandoverContractReq } from "@/models/rental-contract/schema/request"
@@ -95,6 +102,8 @@ export function RentalContractDetail({
     const { toFullName } = useUserHelper()
     const { formatDateTime } = useDay({ defaultFormat: DATE_TIME_VIEW_FORMAT })
     const { isOpen, onOpen, onOpenChange } = useDisclosure()
+
+    const { data: businessVariables } = useGetBusinessVariables()
 
     const payload = decodeJwt(useTokenStore((s) => s.accessToken!))
     const { data: contract, isLoading } = useGetRentalContractById({
@@ -153,6 +162,14 @@ export function RentalContractDetail({
         invoice: invoice
     }))
 
+    const refundCreationDelayDays = (businessVariables || []).find(
+        (v) => v.key === BusinessVariableKey.RefundCreationDelayDays
+    ) || {
+        id: "",
+        key: BusinessVariableKey.RefundCreationDelayDays,
+        value: 10
+    }
+
     const refundInvoiceCreateable =
         isStaffInStation &&
         contract &&
@@ -162,7 +179,7 @@ export function RentalContractDetail({
         getDiffDaysCeil({
             startDate: contract.actualEndDate,
             endDate: new Date()
-        }) >= 10
+        }) >= refundCreationDelayDays.value
 
     //======================================= //
     // Handover

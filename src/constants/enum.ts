@@ -142,5 +142,6 @@ export enum BusinessVariableKey {
     CleaningFee = 1,
     BaseVAT = 2,
     MaxLateReturnHours = 3,
-    RentalContractBufferDay = 4
+    RentalContractBufferDay = 4,
+    RefundCreationDelayDays = 5
 }

@@ -22,10 +22,12 @@ import {
 
 export function PolicyPageVN({
     lateReturnFee,
-    maxLateReturnHours
+    maxLateReturnHours,
+    refundCreationDelayDays
 }: {
     lateReturnFee: BusinessVariableViewRes
     maxLateReturnHours: BusinessVariableViewRes
+    refundCreationDelayDays: BusinessVariableViewRes
 }) {
     // Từ khóa cần nổi bật (điều chỉnh theo ngữ cảnh GW)
     const HIGHLIGHTS = [
@@ -53,7 +55,7 @@ export function PolicyPageVN({
         "thu hồi xe",
         "07:00",
         "17:00",
-        "10 ngày",
+        `${refundCreationDelayDays.value.toString()} ngày`,
         "24 tiếng",
         "Xe",
         formatCurrencyWithSymbol(lateReturnFee.value)
@@ -67,14 +69,23 @@ export function PolicyPageVN({
 
     // render đã bôi đậm
     const intro_muc_dich = highlight(INTRO_MUC_DICH, HIGHLIGHTS)
-    const intro_dinh_nghia = highlight(INTRO_DINH_NGHIA, HIGHLIGHTS)
+    const intro_dinh_nghia = highlight(
+        INTRO_DINH_NGHIA.replace(
+            "{{refundCreationDelayDays}}",
+            refundCreationDelayDays.value.toString()
+        ),
+        HIGHLIGHTS
+    )
     const dv_mo_ta = highlight(DV_MO_TA, HIGHLIGHTS)
     const dat_giam_huy = highlight(DAT_GIAM_HUY, HIGHLIGHTS)
     const phi_co_ban = highlight(PHI_CO_BAN, HIGHLIGHTS)
     const phi_tre_han = highlight(PHI_TRE_HAN, HIGHLIGHTS)
     // const phi_tra_som = highlight(PHI_TRA_SOM, HIGHLIGHTS)
     const nhac_no = highlight(NHAC_NO_CANH_BAO, HIGHLIGHTS)
-    const dat_coc = highlight(DAT_COC, HIGHLIGHTS)
+    const dat_coc = highlight(
+        DAT_COC.replace("{{refundCreationDelayDays}}", refundCreationDelayDays.value.toString()),
+        HIGHLIGHTS
+    )
     const thanh_toan = highlight(THANH_TOAN, HIGHLIGHTS)
     const giao_tra_xe = highlight(GIAO_TRA_XE, HIGHLIGHTS)
     const trach_nhiem_kh = highlight(TRACH_NHIEM_KH, HIGHLIGHTS)

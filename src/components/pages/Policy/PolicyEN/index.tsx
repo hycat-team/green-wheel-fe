@@ -22,10 +22,12 @@ import {
 
 export function PolicyPageEN({
     lateReturnFee,
-    maxLateReturnHours
+    maxLateReturnHours,
+    refundCreationDelayDays
 }: {
     lateReturnFee: BusinessVariableViewRes
     maxLateReturnHours: BusinessVariableViewRes
+    refundCreationDelayDays: BusinessVariableViewRes
 }) {
     // Keywords to highlight
     const HIGHLIGHTS = [
@@ -57,7 +59,7 @@ export function PolicyPageEN({
         "vehicle repossession",
         "07:00",
         "17:00",
-        "10 days",
+        `${refundCreationDelayDays.value.toString()} days`,
         "24 hours",
         "Vehicle",
         formatCurrencyWithSymbol(lateReturnFee.value)
@@ -70,13 +72,22 @@ export function PolicyPageEN({
     )} will be applied.`
 
     const intro_purpose = highlight(INTRO_PURPOSE, HIGHLIGHTS)
-    const intro_definitions = highlight(INTRO_DEFINITIONS, HIGHLIGHTS)
+    const intro_definitions = highlight(
+        INTRO_DEFINITIONS.replace(
+            "{{refundCreationDelayDays}}",
+            refundCreationDelayDays.value.toString()
+        ),
+        HIGHLIGHTS
+    )
     const service_desc = highlight(SERVICE_DESCRIPTION, HIGHLIGHTS)
     const booking_cancel = highlight(BOOKING_CANCEL, HIGHLIGHTS)
     const base_fee = highlight(BASE_FEE, HIGHLIGHTS)
     const late_fee = highlight(LATE_RETURN_FEE, HIGHLIGHTS)
     const reminder_notice = highlight(REMINDER_NOTICE, HIGHLIGHTS)
-    const deposit = highlight(DEPOSIT, HIGHLIGHTS)
+    const deposit = highlight(
+        DEPOSIT.replace("{{refundCreationDelayDays}}", refundCreationDelayDays.value.toString()),
+        HIGHLIGHTS
+    )
     const payment = highlight(PAYMENT, HIGHLIGHTS)
     const handover_return = highlight(HANDOVER_RETURN, HIGHLIGHTS)
     const customer_resp = highlight(CUSTOMER_RESPONSIBILITY, HIGHLIGHTS)

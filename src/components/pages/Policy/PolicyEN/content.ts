@@ -5,7 +5,7 @@ export const INTRO_DEFINITIONS = String.raw`2.1. "Cost" refers to any amount pai
 2.3. "Reservation Invoice" is a prepayment invoice to secure a vehicle for the Customer. If the Reservation Invoice is paid, the amount will be deducted directly from the Handover Invoice. If the Customer does not pay the Reservation Invoice but pays the Handover Invoice directly, the Reservation Invoice will be canceled and no deduction will apply.
 2.4. "Handover Invoice" is the official invoice that must be paid before vehicle handover, including the Rental Fee, Deposit Fee, and other applicable charges.
 2.5. "Rental Fee" refers to the usage fee for the vehicle, calculated based on the daily rental rate multiplied by the total number of rental days specified in the Rental Agreement. The Rental Fee must be paid in full prior to vehicle handover; partial payments are not accepted.
-2.6. "Deposit Fee" is a security deposit ensuring the Customer’s obligations during the rental period. GW reserves the right to offset this deposit against any arising costs such as traffic fines or Damage Fees. Any remaining amount will be refunded (if applicable) at least 10 days after the vehicle is returned, unless there are pending costs or penalties.
+2.6. "Deposit Fee" is a security deposit ensuring the Customer’s obligations during the rental period. GW reserves the right to offset this deposit against any arising costs such as traffic fines or Damage Fees. Any remaining amount will be refunded (if applicable) at least {{refundCreationDelayDays}} days after the vehicle is returned, unless there are pending costs or penalties.
 2.7. "Additional Fee" refers to any charges not included in the Rental Fee or Deposit Fee, including but not limited to cleaning fees, late return fees, or other surcharges incurred during vehicle use.
 2.8. "Damage Fee" is the amount payable by the Customer if the vehicle is damaged, involved in an accident, or lost due to the Customer’s fault; compensation is based on actual damages.
 2.9. "Working Day" refers to the time frame 07:00–17:00 (GMT+7), applicable to all days of the year (including Sundays and public holidays).
@@ -39,7 +39,7 @@ export const REMINDER_NOTICE = String.raw`(1) When the Customer returns the Vehi
 
 export const DEPOSIT = String.raw`- A Deposit Fee is mandatory before vehicle handover and may be paid via online gateway or cash at the station.
 - The Deposit Fee is non-interest-bearing and held throughout the rental period.
-- GW reserves the right to offset the Deposit against any Additional Fees or Damage Fees. Any remaining balance (if any) will be refunded at least 10 days after the Vehicle Return Report is signed and final settlement completed.`
+- GW reserves the right to offset the Deposit against any Additional Fees or Damage Fees. Any remaining balance (if any) will be refunded at least {{refundCreationDelayDays}} days after the Vehicle Return Report is signed and final settlement completed.`
 
 export const PAYMENT = String.raw`- The Rental Fee must be paid upon vehicle handover. The system automatically generates both the Reservation Invoice and the Handover Invoice upon booking.
 - If the Customer pays the Reservation Invoice, the amount will be deducted from the Handover Invoice.

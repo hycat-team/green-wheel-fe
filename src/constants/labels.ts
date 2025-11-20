@@ -188,5 +188,6 @@ export const BusinessVariableKeyLabels: Record<BusinessVariableKey, string> = {
     [BusinessVariableKey.CleaningFee]: i18n.t("enum.cleaning_fee"),
     [BusinessVariableKey.BaseVAT]: i18n.t("enum.base_vat"),
     [BusinessVariableKey.MaxLateReturnHours]: i18n.t("enum.max_late_return_hours"),
-    [BusinessVariableKey.RentalContractBufferDay]: i18n.t("enum.rental_contract_buffer_day")
+    [BusinessVariableKey.RentalContractBufferDay]: i18n.t("enum.rental_contract_buffer_day"),
+    [BusinessVariableKey.RefundCreationDelayDays]: i18n.t("enum.refund_creation_delay_days")
 }

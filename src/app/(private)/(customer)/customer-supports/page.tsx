@@ -33,7 +33,7 @@ export default function CustomerSupportsPage() {
     }, [queryResult.error, t])
 
     return (
-        <div className="md:min-w-3xl lg:min-w-5xl max-w-screen">
+        <div className="md:min-w-3xl lg:min-w-5xl max-w-screen px-3 py-2 md:py-8 md:px-12 rounded-2xl bg-white">
             <TicketManagement
                 isEditable={false}
                 filterState={[filter, setFilter]}

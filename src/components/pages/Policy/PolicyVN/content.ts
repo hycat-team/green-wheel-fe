@@ -5,7 +5,7 @@ export const INTRO_DINH_NGHIA = String.raw`2.1. “Chi Phí” là các khoản 
 2.3. “Hóa Đơn Giữ Chỗ” là hóa đơn tạm ứng nhằm đảm bảo việc giữ chỗ Xe cho Khách Hàng. Nếu Hóa Đơn Giữ Chỗ được thanh toán, số tiền sẽ được trừ trực tiếp vào Hóa Đơn Bàn Giao Xe. Nếu Khách Hàng không thanh toán Hóa Đơn Giữ Chỗ mà thanh toán Hóa Đơn Bàn Giao Xe trực tiếp, Hóa Đơn Giữ Chỗ sẽ bị hủy và số tiền thanh toán Hóa Đơn Bàn Giao Xe sẽ không được trừ.
 2.4. “Hóa Đơn Bàn Giao Xe” là hóa đơn chính thức Khách Hàng phải thanh toán trước khi nhận Xe; bao gồm Phí Thuê Xe và Phí Đặt Cọc (và các khoản phụ nếu có).
 2.5. “Phí Thuê Xe” là phí sử dụng Xe, tính theo đơn giá thuê một ngày nhân với tổng số ngày được ghi trong Đơn Thuê Xe. Phí Thuê Xe phải được thanh toán toàn bộ trước khi nhận Xe; không chấp nhận trả từng phần.
-2.6. “Phí Đặt Cọc” là khoản tiền ký quỹ để đảm bảo nghĩa vụ của Khách Hàng trong thời gian thuê; GW có quyền sử dụng khoản này để bù trừ các chi phí phát sinh như phạt nguội hoặc Phí Bồi Thường. Khoản đặt cọc được hoàn trả (nếu có phần còn lại) sau ít nhất 10 ngày kể từ ngày Khách Hàng hoàn trả Xe tại trạm, trừ khi có chi phí/phạt chưa xử lý.
+2.6. “Phí Đặt Cọc” là khoản tiền ký quỹ để đảm bảo nghĩa vụ của Khách Hàng trong thời gian thuê; GW có quyền sử dụng khoản này để bù trừ các chi phí phát sinh như phạt nguội hoặc Phí Bồi Thường. Khoản đặt cọc được hoàn trả (nếu có phần còn lại) sau ít nhất {{refundCreationDelayDays}} ngày kể từ ngày Khách Hàng hoàn trả Xe tại trạm, trừ khi có chi phí/phạt chưa xử lý.
 2.7. “Phí Phát Sinh” là các khoản ngoài Phí Thuê Xe và Phí Đặt Cọc, bao gồm nhưng không giới hạn: phí vệ sinh, phí trả trễ giờ, và các phụ thu khác phát sinh trong quá trình sử dụng Xe.
 2.8. “Phí Bồi Thường” là khoản Khách Hàng phải chịu nếu Xe bị hư hỏng, tai nạn hoặc tổn thất do lỗi của Khách Hàng; mức bồi thường theo thiệt hại thực tế.
 2.9. “Ngày Làm Việc” là khung thời gian 07:00–17:00 (GMT+7) và được áp dụng cho mọi ngày trong năm (bao gồm Chủ Nhật và ngày lễ).
@@ -41,7 +41,7 @@ export const NHAC_NO_CANH_BAO = String.raw`(1) Khi Khách Hàng trả Xe trễ, 
 
 export const DAT_COC = String.raw`- Khoản Đặt Cọc bắt buộc trước khi nhận Xe; có thể thanh toán qua cổng thanh toán hoặc tiền mặt tại trạm.
 - Khoản Đặt Cọc không sinh lãi, được duy trì suốt thời gian thuê.
-- GW có quyền cấn trừ Khoản Đặt Cọc để thanh toán các Phí Phát Sinh hoặc Phí Bồi Thường. Nếu còn dư, GW sẽ hoàn phần còn lại sau ít nhất 10 ngày kể từ ngày ký biên bản trả Xe và hoàn tất đối soát.`
+- GW có quyền cấn trừ Khoản Đặt Cọc để thanh toán các Phí Phát Sinh hoặc Phí Bồi Thường. Nếu còn dư, GW sẽ hoàn phần còn lại sau ít nhất {{refundCreationDelayDays}} ngày kể từ ngày ký biên bản trả Xe và hoàn tất đối soát.`
 
 export const THANH_TOAN = String.raw`- Phí Thuê Xe được thanh toán khi nhận xe; hệ thống tạo tự động Hóa Đơn Giữ Chỗ và Hóa Đơn Bàn Giao Xe khi đặt.
 - Nếu Khách Hàng thanh toán Hóa Đơn Giữ Chỗ, số tiền đó sẽ được trừ vào Hóa Đơn Bàn Giao Xe khi khách hàng thanh toán Hóa Đơn Bàn Giao Xe.

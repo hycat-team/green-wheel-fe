@@ -605,7 +605,8 @@
         "cleaning_fee": "Cleaning Fee",
         "base_vat": "Base VAT",
         "max_late_return_hours": "Max Late Return Hours",
-        "rental_contract_buffer_day": "Rental Booking Buffer Day"
+        "rental_contract_buffer_day": "Rental Booking Buffer Days",
+        "refund_creation_delay_days": "Refund Creation Delay Days"
     },
     "car_rental": {
         "vehicle": "Vehicle",

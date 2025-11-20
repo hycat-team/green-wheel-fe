@@ -27,6 +27,8 @@ export const useGetMe = ({ enabled = true }: { enabled?: boolean } = {}) => {
         queryKey: QUERY_KEYS.ME,
         queryFn: profileApi.getMe,
         enabled,
+        staleTime: 14 * 60 * 1000,
+        refetchOnMount: false,
         refetchOnWindowFocus: false
     })
     return query

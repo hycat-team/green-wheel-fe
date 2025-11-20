@@ -605,7 +605,8 @@
         "cleaning_fee": "Phí vệ sinh",
         "base_vat": "VAT cơ bản",
         "max_late_return_hours": "Số giờ trả muộn tối đa",
-        "rental_contract_buffer_day": "Ngày đệm thuê xe"
+        "rental_contract_buffer_day": "Số ngày đệm thuê xe",
+        "refund_creation_delay_days": "Số ngày hoãn trước khi hoàn tiền"
     },
     "car_rental": {
         "vehicle": "Xe",
