@@ -13,8 +13,7 @@ import {
     GREENWHEEL_PHONE
 } from "@/constants/constants"
 import { EMAIL_REGEX, PHONE_REGEX } from "@/constants/regex"
-import { useCreateTicket, useUserHelper } from "@/hooks"
-import { TicketType } from "@/constants/enum"
+import { useCreateContact, useUserHelper } from "@/hooks"
 import { Spinner } from "@heroui/react"
 
 type FormikValues = {
@@ -25,11 +24,11 @@ type FormikValues = {
     description?: string
 }
 
-export default function Contact() {
+export default function ContactPage() {
     const { t } = useTranslation()
     const { toFullName } = useUserHelper()
 
-    const createMutation = useCreateTicket({ onSuccess: undefined })
+    const createMutation = useCreateContact({ onSuccess: undefined })
     const handleCreate = useCallback(
         async (values: FormikValues) => {
             const description = [
@@ -46,8 +45,7 @@ export default function Contact() {
 
             await createMutation.mutateAsync({
                 title: "Contact",
-                description,
-                type: TicketType.Contact
+                description
             })
         },
         [createMutation, toFullName]

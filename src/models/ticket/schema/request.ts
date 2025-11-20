@@ -1,5 +1,10 @@
 import { TicketStatus, TicketType } from "@/constants/enum"
 
+export type CreateContactReq = {
+    title: string
+    description: string
+}
+
 export type CreateTicketReq = {
     title: string
     description: string

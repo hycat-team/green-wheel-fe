@@ -10,6 +10,29 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { useTranslation } from "react-i18next"
 import { addToast } from "@heroui/toast"
 
+export const useCreateContact = ({ onSuccess }: { onSuccess?: () => void }) => {
+    const { t } = useTranslation()
+
+    return useMutation({
+        mutationFn: ticketApi.createContact,
+        onSuccess: () => {
+            onSuccess?.()
+            addToast({
+                title: t("toast.success"),
+                description: t("contact.wait_for_reply"),
+                color: "success"
+            })
+        },
+        onError: (error: BackendError) => {
+            addToast({
+                title: error.title || t("toast.error"),
+                description: translateWithFallback(t, error.detail),
+                color: "danger"
+            })
+        }
+    })
+}
+
 export const useCreateTicket = ({
     status,
     pagination = {},

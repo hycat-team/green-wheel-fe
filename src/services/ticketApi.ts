@@ -3,6 +3,7 @@ import { PaginationParams } from "@/models/common/request"
 import { PageResult } from "@/models/common/response"
 import { TicketViewRes } from "@/models/ticket/schema/response"
 import {
+    CreateContactReq,
     CreateTicketReq,
     TicketFilterParams,
     UpdateTicketReq
@@ -11,6 +12,12 @@ import axiosInstance from "@/utils/axios"
 import { buildQueryParams, requestWrapper } from "@/utils/helpers/axiosHelper"
 
 export const ticketApi = {
+    createContact: (req: CreateContactReq) =>
+        requestWrapper<{ id: string }>(async () => {
+            const res = await axiosInstance.post("/tickets/contact", req)
+            return res.data
+        }),
+
     create: (req: CreateTicketReq) =>
         requestWrapper<{ id: string }>(async () => {
             const res = await axiosInstance.post("/tickets", req)

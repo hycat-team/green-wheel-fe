@@ -774,7 +774,8 @@
         "further_description": "Mô tả thêm",
         "further_description_placeholder": "Thêm chi tiết nếu cần",
         "send_message": "Gửi tin nhắn",
-        "sub": "Đội ngũ của chúng tôi sẽ phản hồi bạn sớm nhất có thể. Trong trường hợp khẩn cấp, vui lòng gọi hotline."
+        "sub": "Đội ngũ của chúng tôi sẽ phản hồi bạn sớm nhất có thể. Trong trường hợp khẩn cấp, vui lòng gọi hotline.",
+        "wait_for_reply": "Gửi thành công. Vui lòng chờ phản hồi..."
     },
     "rental_contract": {
         "id": "Mã đặt xe",
@@ -864,7 +865,7 @@
         "total": "Tổng",
         "no_damage_items": "Không có hỏng hóc.",
         "no_detailed_description": "Không có mô tả chi tiết.",
-        "fees_include_tax": "Các phí đánh dấu * đã bao gồm thuế",
+        "fees_include_tax": "Các phí đánh dấu * sẽ bao gồm thuế",
         "penalty_warning": "Xin lưu ý rằng tiền đặt cọc không được hoàn nếu có phí phạt phát sinh",
         "visit_station_to_get_refund": "Vui lòng đến trạm để nhận tiền hoàn trả bằng tiền mặt",
         "create_title": "TẠO HÓA ĐƠN",

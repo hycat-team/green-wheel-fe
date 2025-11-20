@@ -132,7 +132,7 @@ export const useGetMyContracts = ({
     enabled?: boolean
 }) => {
     const query = useQuery({
-        queryKey: [...QUERY_KEYS.VEHICLE_SEGMENTS, ...QUERY_KEYS.ME, status, stationId, pagination],
+        queryKey: [...QUERY_KEYS.RENTAL_CONTRACTS, ...QUERY_KEYS.ME, status, stationId, pagination],
         queryFn: async () =>
             await rentalContractApi.getMyContract({ status, stationId, pagination }),
         enabled

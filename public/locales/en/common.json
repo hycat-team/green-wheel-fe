@@ -774,7 +774,8 @@
         "further_description": "Further description",
         "further_description_placeholder": "Add more details if needed",
         "send_message": "Send Message",
-        "sub": "Our team will get back to you as soon as possible. For urgent matters, please call our hotline."
+        "sub": "Our team will get back to you as soon as possible. For urgent matters, please call our hotline.",
+        "wait_for_reply": "Send successfully. Please wait for reply..."
     },
     "rental_contract": {
         "id": "Booking ID",

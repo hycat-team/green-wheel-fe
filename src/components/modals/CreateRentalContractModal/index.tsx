@@ -6,6 +6,8 @@ import { CreateRentalContractForm } from "./CreateRentalContractForm"
 import { VehicleModelViewRes } from "@/models/vehicle/schema/response"
 import { useRouter } from "next/navigation"
 import { useTranslation } from "react-i18next"
+import { useQueryClient } from "@tanstack/react-query"
+import { QUERY_KEYS } from "@/constants/queryKey"
 
 export function CreateRentalContractModal({
     isOpen,
@@ -26,12 +28,17 @@ export function CreateRentalContractModal({
 }) {
     const { t } = useTranslation()
     const router = useRouter()
+    const queryClient = useQueryClient()
+
     const handleSuccess = useCallback(() => {
         const redirectPath = isCustomer ? "/rental-bookings" : "/dashboard/rental-bookings"
-
+        queryClient.invalidateQueries({
+            queryKey: QUERY_KEYS.RENTAL_CONTRACTS,
+            exact: false
+        })
         router.push(redirectPath)
         onClose()
-    }, [isCustomer, onClose, router])
+    }, [isCustomer, onClose, queryClient, router])
 
     return (
         <ModalStyled isOpen={isOpen} onClose={onClose} isDismissable={true}>
