@@ -198,6 +198,7 @@
 
         "driver_license": "Driver License",
         "upload_driver_license": "Upload Driver License",
+        "b1_or_higher": "B1 or higher",
         "please_upload_driver_license": "Please upload your Driver License to booking",
         "class": "Class",
         "driver_license_class_require": "Driver License class is required",

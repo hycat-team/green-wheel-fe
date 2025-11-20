@@ -198,6 +198,7 @@
 
         "driver_license": "Bằng lái xe",
         "upload_driver_license": "Tải bằng lái xe",
+        "b1_or_higher": "B1 trở lên",
         "please_upload_driver_license": "Vui lòng tải bằng lái xe để thuê xe",
         "class": "Hạng",
         "driver_license_class_require": "Hạng bằng lái là bắt buộc",

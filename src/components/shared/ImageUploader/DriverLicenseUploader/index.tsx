@@ -50,7 +50,7 @@ export function DriverLicenseUploader({
             </ButtonIconStyled>
             <ImagesUploaderModal
                 key={isOpen ? "open" : "closed"}
-                label={t("user.upload_driver_license")}
+                label={`${t("user.upload_driver_license")} - ${t("user.b1_or_higher")}`}
                 notes={t("user.upload_first_then_back_image")}
                 isOpen={isOpen}
                 onOpenChange={onOpenChange}
