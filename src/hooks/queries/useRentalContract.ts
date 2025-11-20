@@ -219,14 +219,18 @@ export const useHandoverContract = ({ id, onSuccess }: { id: string; onSuccess?:
     return useMutation({
         mutationFn: async ({ req }: { req: HandoverContractReq }) => {
             await rentalContractApi.handover({ id, req })
+            return req
         },
-        onSuccess: async () => {
+        onSuccess: async (req: HandoverContractReq) => {
             await invalidateById(id)
             onSuccess?.()
             // toast.success(t("success.handover"))
             addToast({
                 title: t("toast.success"),
-                description: t("success.handover"),
+                description:
+                    req.isSignedByCustomer && req.isSignedByStaff
+                        ? t("success.handover")
+                        : t("success.confirm"),
                 color: "success"
             })
         },

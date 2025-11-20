@@ -1,6 +1,7 @@
 import {
     DamageStatus,
     DispatchRequestStatus,
+    InvoiceStatus,
     RentalContractStatus,
     TicketStatus,
     VehicleChecklistType,
@@ -63,4 +64,10 @@ export const VehicleStatusColorMap: Record<VehicleStatus, string> = {
     [VehicleStatus.Maintenance]: "bg-orange-100 text-orange-700",
     [VehicleStatus.MissingNoReason]: "bg-rose-100 text-rose-700",
     [VehicleStatus.LateReturn]: "bg-purple-100 text-purple-700"
+}
+
+export const InvoiceStatusColorMap: Record<InvoiceStatus, "success" | "warning" | "danger"> = {
+    [InvoiceStatus.Paid]: "success",
+    [InvoiceStatus.Pending]: "warning",
+    [InvoiceStatus.Cancelled]: "danger"
 }

@@ -7,7 +7,7 @@ import { DispatchRequestStatusLabels } from "@/constants/labels"
 import { useDay, useGetAllDispatch, useGetMe, useNavigateOnClick } from "@/hooks"
 import { DispatchQueryParams } from "@/models/dispatch/schema/request"
 import { Chip, TableBody, TableCell, TableColumn, TableHeader, TableRow } from "@heroui/react"
-import { EyeIcon, Plus } from "lucide-react"
+import { Plus } from "lucide-react"
 
 import Link from "next/link"
 import React, { useEffect, useRef, useState } from "react"
@@ -110,9 +110,6 @@ export default function DispatchPage() {
                             <TableColumn className="text-center text-gray-700 font-semibold">
                                 {t("table.status")}
                             </TableColumn>
-                            <TableColumn className="text-center text-gray-700 font-semibold">
-                                {t("table.action")}
-                            </TableColumn>
                         </TableHeader>
 
                         <TableBody>
@@ -163,23 +160,13 @@ export default function DispatchPage() {
                                                     {statusLabel}
                                                 </Chip>
                                             </TableCell>
-                                            <TableCell className="text-center">
-                                                <Link href={`/dashboard/dispatchs/${item.id}`}>
-                                                    <ButtonIconStyled
-                                                        className="p-4"
-                                                        variant="bordered"
-                                                    >
-                                                        <EyeIcon />
-                                                    </ButtonIconStyled>
-                                                </Link>
-                                            </TableCell>
                                         </TableRow>
                                     )
                                 })
                             ) : (
                                 <TableRow>
                                     <TableCell
-                                        colSpan={8}
+                                        colSpan={7}
                                         className="text-center py-10 text-gray-500 italic"
                                     >
                                         ...

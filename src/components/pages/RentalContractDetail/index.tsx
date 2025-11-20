@@ -39,7 +39,7 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation"
 import { useFormik } from "formik"
 import * as Yup from "yup"
 import { decodeJwt } from "@/utils/helpers/jwt"
-import { InvoiceType, RentalContractStatus, VehicleChecklistType } from "@/constants/enum"
+import { InvoiceType, RentalContractStatus, RoleName, VehicleChecklistType } from "@/constants/enum"
 import { ChecklistSection } from "./ChecklistSection"
 import { CreateInvoiceSection } from "./CreateInvoiceSection"
 import { HandoverContractReq } from "@/models/rental-contract/schema/request"
@@ -90,7 +90,7 @@ export function RentalContractDetail({
     const router = useRouter()
 
     const { t } = useTranslation()
-    const { toZonedDateTime } = useDay()
+    const { toZonedDateTime, getDiffDaysCeil } = useDay()
     const { parseNumber } = useNumber()
     const { toFullName } = useUserHelper()
     const { formatDateTime } = useDay({ defaultFormat: DATE_TIME_VIEW_FORMAT })
@@ -106,7 +106,7 @@ export function RentalContractDetail({
     // check owner if customer
     useEffect(() => {
         if (!contract || !payload.sid) return
-        if (!staff?.station?.id && payload.sid != contract?.customer.id) {
+        if (isCustomer && payload.sid != contract?.customer.id) {
             router.push("/")
             addToast({
                 title: t("toast.error"),
@@ -114,45 +114,13 @@ export function RentalContractDetail({
                 color: "danger"
             })
         }
-    }, [contract, staff?.station?.id, payload.sid, router, t])
+    }, [contract, isCustomer, payload.sid, router, t])
 
     // check staff station
-    const isStaffInStation = staff !== undefined && contract?.station.id === staff?.station?.id
-
-    //======================================= //
-    // Invoice accordion
-    //======================================= //
-    const invoiceAccordion = (contract?.invoices || []).map((invoice) => ({
-        key: invoice.id,
-        ariaLabel: invoice.id,
-        title: `${InvoiceTypeLabels[invoice.type]}`,
-        status: invoice.status,
-        content: renderInvoiceForm(invoice),
-        invoice: invoice
-    }))
-    const hasRunUpdateRef = useRef(false)
-    useEffect(() => {
-        const resultCodeRaw = searchParams.get("resultCode")
-        if (!resultCodeRaw || hasRunUpdateRef.current) return
-
-        hasRunUpdateRef.current = true
-
-        const resultCode = parseNumber(resultCodeRaw)
-
-        const fn = async () => {
-            if (resultCode === 0) {
-                await updateContractStatus.mutateAsync({ id: contractId })
-            } else {
-                addToast({
-                    title: t("toast.error"),
-                    description: t("failed.payment"),
-                    color: "danger"
-                })
-            }
-        }
-
-        fn()
-    }, [contractId, parseNumber, pathName, searchParams, t, updateContractStatus])
+    const isStaffInStation =
+        staff !== undefined &&
+        staff.role?.name === RoleName.Staff &&
+        contract?.station.id === staff?.station?.id
 
     //======================================= //
     // Checklist
@@ -172,6 +140,29 @@ export function RentalContractDetail({
     const returnChecklist = useMemo(() => {
         return checklists?.items.find((item) => item.type === VehicleChecklistType.Return)
     }, [checklists])
+
+    //======================================= //
+    // Invoice accordion
+    //======================================= //
+    const invoiceAccordion = (contract?.invoices || []).map((invoice) => ({
+        key: invoice.id,
+        ariaLabel: invoice.id,
+        title: `${InvoiceTypeLabels[invoice.type]}`,
+        status: invoice.status,
+        content: renderInvoiceForm(invoice),
+        invoice: invoice
+    }))
+
+    const refundInvoiceCreateable =
+        isStaffInStation &&
+        contract &&
+        contract.status == RentalContractStatus.Returned &&
+        returnChecklist &&
+        !contract.invoices.find((item) => item.type == InvoiceType.Refund) &&
+        getDiffDaysCeil({
+            startDate: contract.actualEndDate,
+            endDate: new Date()
+        }) >= 10
 
     //======================================= //
     // Handover
@@ -210,6 +201,31 @@ export function RentalContractDetail({
             })
         }
     })
+
+    //======================================= //
+    const hasRunUpdateRef = useRef(false)
+    useEffect(() => {
+        const resultCodeRaw = searchParams.get("resultCode")
+        if (!resultCodeRaw || hasRunUpdateRef.current) return
+
+        hasRunUpdateRef.current = true
+
+        const resultCode = parseNumber(resultCodeRaw)
+
+        const fn = async () => {
+            if (resultCode === 0) {
+                await updateContractStatus.mutateAsync({ id: contractId })
+            } else {
+                addToast({
+                    title: t("toast.error"),
+                    description: t("failed.payment"),
+                    color: "danger"
+                })
+            }
+        }
+
+        fn()
+    }, [contractId, parseNumber, pathName, searchParams, t, updateContractStatus])
 
     //======================================= //
     if (isLoading || !contract)
@@ -318,15 +334,6 @@ export function RentalContractDetail({
                         />
                     </div>
 
-                    {/* <InputStyled
-                        isReadOnly
-                        label={t("rental_contract.contract_status")}
-                        value={RentalContractStatusLabels[contract.status]}
-                        startContent={
-                            <ClipboardText size={22} className="text-primary" weight="duotone" />
-                        }
-                        variant="bordered"
-                    /> */}
                     <InputStyled
                         isReadOnly
                         label={t("station.station")}
@@ -424,12 +431,9 @@ export function RentalContractDetail({
                     returnChecklist={returnChecklist}
                     className="mb-3"
                 />
-                {isStaffInStation &&
-                    contract.status == RentalContractStatus.Returned &&
-                    returnChecklist &&
-                    !contract.invoices.find((item) => item.type == InvoiceType.Refund) && (
-                        <CreateInvoiceSection contractId={contract.id} type={InvoiceType.Refund} />
-                    )}
+                {refundInvoiceCreateable && (
+                    <CreateInvoiceSection contractId={contract.id} type={InvoiceType.Refund} />
+                )}
             </SectionStyled>
 
             {/* Vehicle checklists */}
@@ -440,6 +444,7 @@ export function RentalContractDetail({
                 {isHandoverChecklistDisplay && (
                     <ChecklistSection
                         isStaff={isStaffInStation}
+                        isCustomer={isCustomer}
                         contract={contract}
                         checklist={hanoverChecklist}
                         type={VehicleChecklistType.Handover}
@@ -448,6 +453,7 @@ export function RentalContractDetail({
                 {isReturnChecklistDisplay && (
                     <ChecklistSection
                         isStaff={isStaffInStation}
+                        isCustomer={isCustomer}
                         contract={contract}
                         checklist={returnChecklist}
                         type={VehicleChecklistType.Return}
@@ -464,6 +470,7 @@ export function RentalContractDetail({
                     name: "isSignedByStaff",
                     checked: handoverFormik.values.isSignedByStaff,
                     isInvalid: !!(
+                        isHandoverStaffEditable &&
                         handoverFormik.touched.isSignedByStaff &&
                         handoverFormik.errors.isSignedByStaff
                     ),
@@ -478,6 +485,7 @@ export function RentalContractDetail({
                     name: "isSignedByCustomer",
                     checked: handoverFormik.values.isSignedByCustomer,
                     isInvalid: !!(
+                        isHandoverCustomerEditable &&
                         handoverFormik.touched.isSignedByCustomer &&
                         handoverFormik.errors.isSignedByCustomer
                     ),

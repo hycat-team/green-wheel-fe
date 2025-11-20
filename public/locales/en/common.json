@@ -55,6 +55,7 @@
         "payment": "Payment success",
         "cancel": "Cancel success",
         "handover": "Handover success",
+        "confirm": "Confirm success",
         "return": "Return success"
     },
     "failed": {
@@ -657,7 +658,7 @@
         "dashboard": "Dashboard",
         "sidebar_vehicle_checklists": "Checklists",
         "sidebar_bookings": "Rental Bookings",
-        "sidebar_test": "Test",
+        "sidebar_contact": "Contacts",
         "sidebar_verify_customer": "Customer Verification",
         "sidebar_payments": "On-site Payments",
         "sidebar_fleet": "Fleet",
@@ -908,6 +909,7 @@
 
         "customer_support": "Customer Support",
         "send_customer_support": "Send customer support request",
+        "contact": "Contact",
         "staff_report": "Staff Report",
         "title": "Title",
         "title_require": "Title is required",
@@ -953,6 +955,7 @@
         "dispatch": "Dispatch",
         "title": "Dispatch staff and vehicles between stations",
         "requested_staffs_vehicles": "Requested number of staffs and vehicle list",
+        "approved_staffs_vehicles": "Super Admin approved number of staffs and vehicle list",
         "list_vehicle": "List vehicles",
         "list_staff": "List staffs",
         "dispatch_detail": "Dispatch Detail",

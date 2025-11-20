@@ -108,6 +108,47 @@ export function DispatchInfo({ dispatch }: { dispatch: DispatchViewRes }) {
                     </TableStyled>
                 </div>
             </SectionStyled>
+
+            <SectionStyled title={t("dispatch.approved_staffs_vehicles")} sectionClassName="w-full">
+                {dispatch.finalDescription && (
+                    <div className="flex gap-3 flex-wrap sm:flex-nowrap">
+                        <NumberInputStyled
+                            label={t("dispatch.number_staff")}
+                            className="w-50"
+                            value={dispatch.finalDescription?.numberOfStaffs}
+                            isReadOnly
+                        />
+                        <div className="hidden sm:block w-[5px] bg-default self-stretch"></div>
+                        <TableStyled
+                            classNames={{
+                                base: "max-h-[250px] overflow-scroll"
+                            }}
+                        >
+                            <TableHeader>
+                                <TableColumn className="w-sm hidden md:table-cell">
+                                    {t("vehicle.model_id")}
+                                </TableColumn>
+                                <TableColumn>{t("vehicle_model.name")}</TableColumn>
+                                <TableColumn>{t("common.quantity")}</TableColumn>
+                            </TableHeader>
+                            <TableBody
+                                items={dispatch.finalDescription?.vehicles || []}
+                                emptyContent={t("dispatch.no_vehicles_requested")}
+                            >
+                                {(item) => (
+                                    <TableRow key={item.modelId}>
+                                        <TableCell className="hidden md:table-cell">
+                                            {item.modelId}
+                                        </TableCell>
+                                        <TableCell>{item.modelName}</TableCell>
+                                        <TableCell>{item.quantity}</TableCell>
+                                    </TableRow>
+                                )}
+                            </TableBody>
+                        </TableStyled>
+                    </div>
+                )}
+            </SectionStyled>
         </>
     )
 }

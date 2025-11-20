@@ -8,7 +8,7 @@ import {
     TicketCard
 } from "@/components"
 import { TicketStatus, TicketType } from "@/constants/enum"
-import { TicketStatusLabels } from "@/constants/labels"
+import { TicketStatusLabels, TicketTypeLabels } from "@/constants/labels"
 import { PaginationParams } from "@/models/common/request"
 import { PageResult } from "@/models/common/response"
 import { TicketFilterParams } from "@/models/ticket/schema/request"
@@ -42,13 +42,11 @@ export default function TicketManagement({
 
     return (
         <div>
-            <div className="text-3xl mb-3 font-bold">
-                <p>
-                    {filter.type === TicketType.CustomerSupport
-                        ? t("ticket.customer_support")
-                        : t("ticket.staff_report")}
-                </p>
-            </div>
+            {filter.type != undefined && (
+                <div className="text-3xl mb-3 font-bold">
+                    <p>{TicketTypeLabels[filter.type]}</p>
+                </div>
+            )}
 
             <div className="mb-3 flex gap-3 items-center">
                 <EnumPicker

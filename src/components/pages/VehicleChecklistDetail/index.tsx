@@ -29,7 +29,15 @@ import { DEFAULT_DATE_FORMAT, DEFAULT_TIMEZONE } from "@/constants/constants"
 import { addToast } from "@heroui/toast"
 import { useRouter } from "next/navigation"
 
-export function VehicleChecklistDetail({ id, isStaff = false }: { id: string; isStaff?: boolean }) {
+export function VehicleChecklistDetail({
+    id,
+    isStaff = false,
+    isCustomer = false
+}: {
+    id: string
+    isStaff?: boolean
+    isCustomer?: boolean
+}) {
     const { t } = useTranslation()
     const router = useRouter()
     const { toFullName } = useUserHelper()
@@ -44,13 +52,13 @@ export function VehicleChecklistDetail({ id, isStaff = false }: { id: string; is
         enabled: true
     })
 
-    const isEditable = useMemo(() => {
-        return isStaff && (!checklist?.isSignedByStaff || !checklist?.isSignedByCustomer)
-    }, [checklist?.isSignedByCustomer, checklist?.isSignedByStaff, isStaff])
+    const isStaffEditable = useMemo(() => {
+        return isStaff && !checklist?.isSignedByStaff
+    }, [checklist?.isSignedByStaff, isStaff])
 
-    const isSubmitable = useMemo(() => {
-        return !checklist?.isSignedByStaff || !checklist?.isSignedByCustomer
-    }, [checklist?.isSignedByCustomer, checklist?.isSignedByStaff])
+    const isCustomerEditable = useMemo(() => {
+        return (isStaff || isCustomer) && !checklist?.isSignedByCustomer
+    }, [checklist?.isSignedByCustomer, isCustomer, isStaff])
 
     const contractUrl = useMemo(() => {
         return isStaff
@@ -165,7 +173,7 @@ export function VehicleChecklistDetail({ id, isStaff = false }: { id: string; is
                         {VehicleChecklistTypeLabels[checklist!.type]}
                     </span>
                 </h2>
-                {checklist.contractId && (
+                {checklist.contractId && isStaff && (
                     <Link href={contractUrl}>
                         {`${t("rental_contract.id")}: ${checklist.contractId}`}
                         <span className="underline pl-2 text-sm text-gray-400 ">
@@ -214,7 +222,7 @@ export function VehicleChecklistDetail({ id, isStaff = false }: { id: string; is
             {/* Table */}
             {formik.values.checklistItems.length > 0 && (
                 <TableCheckListItems
-                    isEditable={isEditable}
+                    isEditable={isStaffEditable}
                     checklistType={checklist.type}
                     vehicleCheckListItems={formik.values.checklistItems}
                     setFieldValue={formik.setFieldValue}
@@ -250,13 +258,18 @@ export function VehicleChecklistDetail({ id, isStaff = false }: { id: string; is
             <SignatureSection
                 // className="pt-10"
                 sectionClassName="mt-8"
-                isReadOnly={!isEditable}
+                // isReadOnly={!isEditable}
                 staffSign={{
                     id: "isSignedByStaff",
                     name: "isSignedByStaff",
                     checked: formik.values.isSignedByStaff,
-                    isInvalid: !!(formik.touched.isSignedByStaff && formik.errors.isSignedByStaff),
+                    isInvalid: !!(
+                        isStaffEditable &&
+                        formik.touched.isSignedByStaff &&
+                        formik.errors.isSignedByStaff
+                    ),
                     isSelected: formik.values.isSignedByStaff,
+                    isReadOnly: !isStaffEditable,
                     // onValueChange: (value) => formik.setFieldValue("isSignedByStaff", value)
                     onChange: formik.handleChange,
                     onBlur: formik.handleBlur
@@ -266,22 +279,24 @@ export function VehicleChecklistDetail({ id, isStaff = false }: { id: string; is
                     name: "isSignedByCustomer",
                     checked: formik.values.isSignedByCustomer,
                     isInvalid: !!(
-                        formik.touched.isSignedByCustomer && formik.errors.isSignedByCustomer
+                        isCustomerEditable &&
+                        formik.touched.isSignedByCustomer &&
+                        formik.errors.isSignedByCustomer
                     ),
                     isSelected: formik.values.isSignedByCustomer,
-                    isReadOnly: !isSubmitable,
+                    isReadOnly: !isCustomerEditable,
                     // onValueChange: (value) => formik.setFieldValue("isSignedByCustomer", value)
                     onChange: formik.handleChange,
                     onBlur: formik.handleBlur
                 }}
             />
 
-            {isSubmitable && (
+            {(isStaffEditable || isCustomerEditable) && (
                 <div className="flex justify-center">
                     <ButtonStyled
                         type="submit"
                         color="primary"
-                        className="mt-10 p-6"
+                        className="mt-8 p-6"
                         isDisabled={formik.isSubmitting || !formik.isValid}
                         onPress={() => formik.handleSubmit()}
                     >

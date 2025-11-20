@@ -5,12 +5,19 @@ import { ModalStyled, VehicleChecklistDetail } from "@/components/"
 
 interface ChecklistModalProps {
     id: string
+    isCustomer?: boolean
     isOpen: boolean
     onOpenChange: () => void
     onClose: () => void
 }
 
-export function ChecklistModal({ id, isOpen, onOpenChange, onClose }: ChecklistModalProps) {
+export function ChecklistModal({
+    id,
+    isCustomer = false,
+    isOpen,
+    onOpenChange,
+    onClose
+}: ChecklistModalProps) {
     return (
         <ModalStyled
             isOpen={isOpen}
@@ -21,7 +28,7 @@ export function ChecklistModal({ id, isOpen, onOpenChange, onClose }: ChecklistM
         >
             <ModalContent className="px-0 py-3 sm:min-w-fit sm:px-8 sm:py-4">
                 <ModalBody className="px-3 py-2 sm:px-6">
-                    <VehicleChecklistDetail id={id} />
+                    <VehicleChecklistDetail id={id} isCustomer={isCustomer} />
                 </ModalBody>
             </ModalContent>
         </ModalStyled>

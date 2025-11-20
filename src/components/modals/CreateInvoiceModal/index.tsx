@@ -17,7 +17,7 @@ export function CreateInvoiceModal({ isOpen, onClose, contractId, type }: Create
     const { t } = useTranslation()
     return (
         <ModalStyled isOpen={isOpen} onClose={onClose} isKeyboardDismissDisabled>
-            <ModalContent className="min-w-6xl px-3 py-2">
+            <ModalContent className="max-w-6xl px-3 py-2">
                 <ModalHeader className="self-center font-bold text-3xl">
                     {t("invoice.create_title")}
                 </ModalHeader>

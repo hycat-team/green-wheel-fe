@@ -81,14 +81,9 @@ import { TaxInput } from "../TaxInput"
 
 export function InvoiceHandOvertForm({ invoice }: { invoice: InvoiceViewRes }) {
     const { t } = useTranslation()
-    // const subStatus =
-    //     invoice.total ===
-    //     invoice.subtotal + invoice.deposit!.amount + invoice.tax * invoice.subtotal
-    //         ? false
-    //         : true
 
     return (
-        <div className="flex  justify-center items-center ">
+        <div className="flex justify-center items-center">
             <div className="flex flex-col gap-3 w-[35rem]">
                 <InputStyled
                     label={t("invoice.rental_fee")}

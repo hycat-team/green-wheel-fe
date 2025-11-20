@@ -10,12 +10,19 @@ import { useTranslation } from "react-i18next"
 
 interface ChecklistSectionProps {
     isStaff: boolean
+    isCustomer?: boolean
     contract: RentalContractViewRes
     checklist?: VehicleChecklistViewRes
     type: VehicleChecklistType
 }
 
-export function ChecklistSection({ isStaff, contract, checklist, type }: ChecklistSectionProps) {
+export function ChecklistSection({
+    isStaff,
+    isCustomer = false,
+    contract,
+    checklist,
+    type
+}: ChecklistSectionProps) {
     const { t } = useTranslation()
     const router = useRouter()
     const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure()
@@ -78,6 +85,7 @@ export function ChecklistSection({ isStaff, contract, checklist, type }: Checkli
                     </ButtonStyled>
                     <ChecklistModal
                         id={checklist.id}
+                        isCustomer={isCustomer}
                         isOpen={isOpen}
                         onOpenChange={onOpenChange}
                         onClose={onClose}

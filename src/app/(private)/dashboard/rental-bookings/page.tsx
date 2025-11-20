@@ -148,6 +148,7 @@ export default function StaffContractsPage() {
                 params={formik.values}
                 pagination={pagination}
             />
+
             <div className="mt-6 flex justify-center">
                 <PaginationStyled
                     page={data?.pageNumber ?? 1}

@@ -34,6 +34,11 @@ export function DashboardSidebar({ className }: { className?: string }) {
             href: "/dashboard/customer-supports"
         },
         {
+            key: "/dashboard/contacts",
+            label: t("staff.sidebar_contact"),
+            href: "/dashboard/contacts"
+        },
+        {
             key: "/dashboard/feedbacks",
             label: t("staff.sidebar_feedback"),
             href: "/dashboard/feedbacks"
@@ -50,6 +55,11 @@ export function DashboardSidebar({ className }: { className?: string }) {
             key: "/dashboard/statistic",
             label: t("admin.statistic"),
             href: "/dashboard/statistic"
+        },
+        {
+            key: "/dashboard/rental-bookings",
+            label: t("staff.sidebar_bookings"),
+            href: "/dashboard/rental-bookings"
         },
         {
             key: "/dashboard/dispatchs",
@@ -78,6 +88,11 @@ export function DashboardSidebar({ className }: { className?: string }) {
             key: "/dashboard/station-statistic",
             label: t("admin.sidebar_admin_statistic"),
             href: "/dashboard/station-statistic"
+        },
+        {
+            key: "/dashboard/rental-bookings",
+            label: t("staff.sidebar_bookings"),
+            href: "/dashboard/rental-bookings"
         },
         {
             key: "/dashboard/vehicles",

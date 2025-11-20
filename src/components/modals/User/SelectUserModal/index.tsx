@@ -160,7 +160,7 @@ export function SelectUserModal({ isOpen, onOpenChange, onClose, setUser }: Sele
                                             className="hover:cursor-pointer"
                                             onClick={() => setSelectedUser(item)}
                                         >
-                                            <TableCell className="left-6">
+                                            <TableCell className="pl-6">
                                                 <User
                                                     as="button"
                                                     avatarProps={{

@@ -20,7 +20,7 @@ import { DATE_TIME_VIEW_FORMAT } from "@/constants/constants"
 import { ButtonIconStyled, DropdownStyled, TableStyled } from "@/components/styled"
 import { ConfirmContractReq, ContractQueryParams } from "@/models/rental-contract/schema/request"
 import { PaginationParams } from "@/models/common/request"
-import { RentalContractStatus } from "@/constants/enum"
+import { RentalContractStatus, RoleName } from "@/constants/enum"
 import { Check, X } from "@phosphor-icons/react"
 import { RentalContractStatusColorMap } from "@/constants/colorMap"
 
@@ -41,29 +41,6 @@ export function TableContractStaff({
     const { formatDateTime } = useDay({ defaultFormat: DATE_TIME_VIEW_FORMAT })
 
     const { data: staff } = useGetMe()
-
-    // ======= Action =======
-    // const handleAccept = useCallback(
-    //     (id: string) => {
-    //         acceptContract.mutateAsync({ id })
-    //     },
-    //     [acceptContract]
-    // )
-
-    // const handleReject = useCallback(
-    //     (id: string, status: VehicleStatus) => {
-    //         rejectContract.mutateAsync({ id, vehicalStatus: status })
-    //     },
-    //     [rejectContract]
-    // )
-
-    // const isLoading = (id: string) => {
-    //     return (
-    //         (acceptContract.isPending && acceptContract.variables?.id === id) ||
-    //         (rejectContract.isPending && rejectContract.variables?.id === id)
-    //     )
-    // }
-    // const [hasVehicle, setHasVehicle] = useState<boolean>(false)
 
     const handleConfirm = useCallback(
         (id: string, req: ConfirmContractReq) => {
@@ -144,6 +121,7 @@ export function TableContractStaff({
                             {/* action */}
                             <TableCell className="text-center">
                                 {item.status === RentalContractStatus.RequestPending &&
+                                staff?.role?.name === RoleName.Staff &&
                                 staff?.station?.id === item.station.id ? (
                                     <div className="flex items-center justify-center gap-2">
                                         {confirmContract.isPending ? (

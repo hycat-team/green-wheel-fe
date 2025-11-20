@@ -62,6 +62,9 @@ export function EditTicketModal({
             case TicketType.CustomerSupport: {
                 return !isAdmin || ticket.status === TicketStatus.EscalatedToAdmin
             }
+            case TicketType.Contact: {
+                return !isAdmin || ticket.status === TicketStatus.EscalatedToAdmin
+            }
             case TicketType.StaffReport: {
                 return isAdmin
             }

@@ -122,7 +122,7 @@ export function EditUserModal({ user, isOpen, onClose }: EditUserModalProps) {
                 <ModalHeaderStyled className="flex flex-col items-center font-semibold text-3xl">
                     {t("common.edit_user")}
                 </ModalHeaderStyled>
-                <ModalBody className="max-h-[70vh] overflow-y-auto">
+                <ModalBody className="min-h-[70vh]">
                     <form onSubmit={formik.handleSubmit} className="flex flex-col gap-6">
                         {/* // === Name === */}
                         <div className="grid gap-4 md:grid-cols-2">
@@ -245,9 +245,9 @@ export function EditUserModal({ user, isOpen, onClose }: EditUserModalProps) {
                                         <ImageStyled
                                             src={citizenUrl}
                                             alt={t("user.citizen_identity")}
-                                            width={400}
-                                            height={250}
-                                            className="max-h-60 w-full rounded-lg border border-dashed border-gray-200 object-cover"
+                                            width={500}
+                                            height={312.5}
+                                            className="w-full rounded-lg border border-dashed border-gray-200 object-cover"
                                         />
                                     ) : null}
                                 </div>
@@ -277,9 +277,9 @@ export function EditUserModal({ user, isOpen, onClose }: EditUserModalProps) {
                                         <ImageStyled
                                             src={licenseUrl}
                                             alt={t("user.driver_license")}
-                                            width={400}
-                                            height={250}
-                                            className="max-h-60 w-full rounded-lg border border-dashed border-gray-200 object-cover"
+                                            width={500}
+                                            height={312.5}
+                                            className="w-full rounded-lg border border-dashed border-gray-200 object-cover"
                                         />
                                     ) : null}
                                 </div>

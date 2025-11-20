@@ -17,6 +17,8 @@ import { usePathname } from "next/navigation"
 import { AlertStyled, ButtonStyled, InvoiceUploader, NumberInputStyled } from "@/components"
 import { VehicleChecklistViewRes } from "@/models/checklist/schema/response"
 import Link from "next/link"
+import { InvoiceStatusColorMap } from "@/constants/colorMap"
+import clsx from "clsx"
 
 export function InvoiceAccordion({
     className = "",
@@ -41,7 +43,9 @@ export function InvoiceAccordion({
     const { t } = useTranslation()
     const pathName = usePathname()
     const payInvoiceMutation = usePayInvoice({ contractId })
-    const [cashAmounts, setCashAmounts] = useState<Record<string, number | undefined>>({})
+    const [cashAmounts, setCashAmounts] = useState<Record<string, number | undefined>>(
+        Object.fromEntries(items.map((item) => [item.invoice.id, item.invoice.total]))
+    )
 
     const { data: user } = useGetMe()
     const { isCustomer, isStaff } = useMemo(() => {
@@ -135,20 +139,6 @@ export function InvoiceAccordion({
         })
     }
 
-    const renderStatusChip = (status: InvoiceStatus) => {
-        const colorMap = {
-            [InvoiceStatus.Paid]: "success",
-            [InvoiceStatus.Pending]: "warning",
-            [InvoiceStatus.Cancelled]: "danger"
-        } as const
-
-        return (
-            <Chip color={colorMap[status]} variant="flat" className="font-medium">
-                {InvoiceStatusLabels[status]}
-            </Chip>
-        )
-    }
-
     return (
         <div>
             <Accordion
@@ -193,7 +183,10 @@ export function InvoiceAccordion({
                             <AccordionItem
                                 key={val.key}
                                 aria-label={val.ariaLabel}
-                                className="w-full"
+                                className={clsx(
+                                    "w-full",
+                                    val.status !== InvoiceStatus.Pending && "bg-gray-100"
+                                )}
                                 title={
                                     <div className="flex justify-between items-center ">
                                         <span className="font-semibold text-base">
@@ -209,7 +202,13 @@ export function InvoiceAccordion({
                                                 )}
                                         </span>
                                         <div className="flex items-center gap-1">
-                                            {renderStatusChip(val.status)}
+                                            <Chip
+                                                color={InvoiceStatusColorMap[val.status]}
+                                                variant="flat"
+                                                className="font-medium"
+                                            >
+                                                {InvoiceStatusLabels[val.status]}
+                                            </Chip>
                                             {val.invoice.paymentMethod !== undefined &&
                                                 val.invoice.status === InvoiceStatus.Paid && (
                                                     <Chip color="primary" variant="bordered">

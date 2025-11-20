@@ -20,9 +20,9 @@ export const INTRO_DINH_NGHIA = String.raw`2.1. “Chi Phí” là các khoản 
 export const DV_MO_TA = String.raw`Dịch Vụ được tính theo ngày. Mỗi tài khoản Khách Hàng chỉ được có một (01) Đơn Thuê Xe đang hoạt động tại một thời điểm.`
 
 export const DAT_GIAM_HUY = String.raw`2.1. Phương thức đặt:
-Khách hàng chỉ có thể đặt xe thông qua Kênh Thông Tin hoặc trực tiếp tại các trạm. GW không chấp nhận đặt xe qua các kênh hoặc hình thức khác.
+Khách hàng chỉ có thể thuê xe thông qua Kênh Thông Tin hoặc trực tiếp tại các trạm. GW không chấp nhận thuê xe qua các kênh hoặc hình thức khác.
 2.2. Thời gian đặt:
-- Khách hàng chỉ có thể đặt xe trong khung giờ 07:00–17:00.
+- Khách hàng chỉ có thể thuê xe trong khung giờ 07:00–17:00.
 - Thời gian nhận xe phải cách thời điểm đặt ít nhất 03 tiếng.
 - Nếu thời gian nhận xe vượt quá 17:59, hệ thống sẽ tự động chuyển sang 07:00 sáng ngày tiếp theo.
 - Thời gian trả xe phải cách thời điểm nhận xe ít nhất 24 tiếng.
