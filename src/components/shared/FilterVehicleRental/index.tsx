@@ -27,20 +27,19 @@ function calcDates(isStaff: boolean) {
 
     const initialStart =
         isBeforeMin || isAfterMax
-            ? zonedNow
-                  .set({ hour: MIN_HOUR, minute: 0, second: 0, millisecond: 0 })
+            ? requiredNow
                   .add({ days: isAfterMax ? 1 : 0 })
-            : zonedNow
-                  .set({
-                      hour: zonedNow.hour,
-                      minute: Math.ceil(zonedNow.minute / 5) * 5,
-                      second: 0,
-                      millisecond: 0
-                  })
-                  .add({
-                      hours: isStaff ? 0 : 3,
-                      minutes: isStaff ? 30 : 0
-                  })
+                  .set({ hour: MIN_HOUR, minute: 0, second: 0, millisecond: 0 })
+            : requiredNow.set({
+                  hour: requiredNow.hour,
+                  minute: Math.ceil(requiredNow.minute / 5) * 5,
+                  second: 0,
+                  millisecond: 0
+              })
+    //   .add({
+    //       hours: isStaff ? 0 : 3,
+    //       minutes: isStaff ? 30 : 0
+    //   })
 
     return {
         minStartDate: initialStart,
@@ -62,6 +61,7 @@ export function FilterVehicleRental({
 
     // setup date time
     const [{ minStartDate, minEndDate }, setDates] = useState(() => calcDates(isStaff))
+
     useEffect(() => {
         const updateDates = () => setDates(calcDates(isStaff))
         updateDates()
@@ -72,16 +72,13 @@ export function FilterVehicleRental({
         const timeout = setTimeout(() => {
             updateDates()
             const interval = setInterval(updateDates, 60000)
-
-            intervalCleanup = () => clearInterval(interval)
+            // cleanup
+            cleanup = () => clearInterval(interval)
         }, delay)
 
-        let intervalCleanup: () => void = () => {}
+        let cleanup = () => clearTimeout(timeout)
 
-        return () => {
-            clearTimeout(timeout)
-            intervalCleanup()
-        }
+        return () => cleanup()
     }, [isStaff])
 
     const {
