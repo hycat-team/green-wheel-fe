@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useEffect, useMemo, useRef } from "react"
+import React, { useCallback, useEffect, useMemo, useRef } from "react"
 import { motion } from "framer-motion"
 import {
     InvoiceAccordion,
@@ -42,6 +42,7 @@ import * as Yup from "yup"
 import { decodeJwt } from "@/utils/helpers/jwt"
 import {
     BusinessVariableKey,
+    InvoiceStatus,
     InvoiceType,
     RentalContractStatus,
     RoleName,
@@ -223,28 +224,59 @@ export function RentalContractDetail({
 
     //======================================= //
     const hasRunUpdateRef = useRef(false)
+    const handleUpdate = useCallback(async () => {
+        await updateContractStatus.mutateAsync({ id: contractId })
+    }, [contractId, updateContractStatus])
     useEffect(() => {
         const resultCodeRaw = searchParams.get("resultCode")
-        if (!resultCodeRaw || hasRunUpdateRef.current) return
+        if (resultCodeRaw == null || hasRunUpdateRef.current) return
 
         hasRunUpdateRef.current = true
 
         const resultCode = parseNumber(resultCodeRaw)
 
-        const fn = async () => {
-            if (resultCode === 0) {
-                await updateContractStatus.mutateAsync({ id: contractId })
-            } else {
-                addToast({
-                    title: t("toast.error"),
-                    description: t("failed.payment"),
-                    color: "danger"
-                })
-            }
+        if (resultCode === 0) {
+            handleUpdate()
+        } else {
+            addToast({
+                title: t("toast.error"),
+                description: t("failed.payment"),
+                color: "danger"
+            })
+        }
+    }, [handleUpdate, parseNumber, searchParams, t])
+
+    useEffect(() => {
+        const resultCodeRaw = searchParams.get("resultCode")
+        if (resultCodeRaw != null || hasRunUpdateRef.current || !contract) return
+
+        const reservationInvoice = contract.invoices.find((i) => i.type === InvoiceType.Reservation)
+        const handoverInvoice = contract.invoices.find((i) => i.type === InvoiceType.Handover)
+        const refundInvoice = contract.invoices.find((i) => i.type === InvoiceType.Refund)
+
+        switch (contract.status) {
+            case RentalContractStatus.PaymentPending:
+                if (
+                    reservationInvoice?.status != InvoiceStatus.Paid &&
+                    handoverInvoice?.status != InvoiceStatus.Paid
+                ) {
+                    return
+                }
+                break
+            case RentalContractStatus.RefundPending:
+                if (refundInvoice?.status != InvoiceStatus.Paid) {
+                    return
+                }
+                break
+
+            default:
+                return
         }
 
-        fn()
-    }, [contractId, parseNumber, pathName, searchParams, t, updateContractStatus])
+        hasRunUpdateRef.current = true
+
+        handleUpdate()
+    }, [contract, handleUpdate, searchParams])
 
     //======================================= //
     if (isLoading || !contract)
