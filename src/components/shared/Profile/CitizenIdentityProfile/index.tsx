@@ -100,6 +100,7 @@ export function CitizenIdentityProfile({ user }: { user: UserProfileViewRes }) {
                 <div className="flex justify-between gap-2">
                     <EnumPicker
                         isReadOnly={!editable}
+                        isClearable={false}
                         label={t("user.sex")}
                         labels={SexLabels}
                         value={formik.values.sex}

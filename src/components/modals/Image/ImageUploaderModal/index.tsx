@@ -47,7 +47,7 @@ export function ImageUploaderModal({
         formData.append("file", blob, "image.jpg")
 
         const res = await uploadFn(formData)
-        if (typeof res.img === "string" && !!setDisplayImg) {
+        if (!!res && typeof res.img === "string" && !!setDisplayImg) {
             setDisplayImg(res.img)
         }
 

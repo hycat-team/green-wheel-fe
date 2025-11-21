@@ -153,18 +153,12 @@ export const useUploadAvatar = ({ onSuccess }: { onSuccess?: () => void }) => {
 
 export const useDeleteAvatar = ({ onSuccess }: { onSuccess?: () => void }) => {
     const { t } = useTranslation()
-    const queryClient = useQueryClient()
+    const invalidateMeQuery = useInvalidateMeQuery()
 
     return useMutation({
         mutationFn: profileApi.deleteAvatar,
         onSuccess: (data) => {
-            queryClient.setQueryData<UserProfileViewRes>(QUERY_KEYS.ME, (prev) => {
-                if (!prev) return prev
-                return {
-                    ...prev,
-                    ...data
-                }
-            })
+            invalidateMeQuery()
             onSuccess?.()
             addToast({
                 title: t("toast.success"),
@@ -201,6 +195,7 @@ export const useUploadCitizenId = ({
 } = {}) => {
     const { t } = useTranslation()
     const queryClient = useQueryClient()
+    const invalidateMeQuery = useInvalidateMeQuery()
 
     return useMutation({
         mutationFn: profileApi.uploadCitizenId,
@@ -215,6 +210,7 @@ export const useUploadCitizenId = ({
                     }
                 }
             )
+            invalidateMeQuery()
             onSuccess?.()
             addToast({
                 title: t("toast.success"),
@@ -283,6 +279,7 @@ export const useDeleteCitizenId = ({
 } = {}) => {
     const { t } = useTranslation()
     const queryClient = useQueryClient()
+    const invalidateMeQuery = useInvalidateMeQuery()
 
     return useMutation({
         mutationFn: profileApi.deleteCitizenId,
@@ -290,6 +287,7 @@ export const useDeleteCitizenId = ({
             queryClient.removeQueries({
                 queryKey: [...QUERY_KEYS.ME, ...QUERY_KEYS.CITIZEN_IDENTITY]
             })
+            invalidateMeQuery()
             onSuccess?.()
             addToast({
                 title: t("toast.success"),
@@ -327,6 +325,7 @@ export const useUploadDriverLicense = ({
 } = {}) => {
     const { t } = useTranslation()
     const queryClient = useQueryClient()
+    const invalidateMeQuery = useInvalidateMeQuery()
 
     return useMutation({
         mutationFn: profileApi.uploadDriverLicense,
@@ -341,6 +340,7 @@ export const useUploadDriverLicense = ({
                     }
                 }
             )
+            invalidateMeQuery()
             onSuccess?.()
             addToast({
                 title: t("toast.success"),
@@ -409,6 +409,7 @@ export const useDeleteDriverLicense = ({
 } = {}) => {
     const { t } = useTranslation()
     const queryClient = useQueryClient()
+    const invalidateMeQuery = useInvalidateMeQuery()
 
     return useMutation({
         mutationFn: profileApi.deleteDriverLicense,
@@ -416,6 +417,7 @@ export const useDeleteDriverLicense = ({
             queryClient.removeQueries({
                 queryKey: [...QUERY_KEYS.ME, ...QUERY_KEYS.DRIVER_LICENSE]
             })
+            invalidateMeQuery()
             onSuccess?.()
             addToast({
                 title: t("toast.success"),

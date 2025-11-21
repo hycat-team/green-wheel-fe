@@ -46,7 +46,7 @@ export function CreateRentalContractModal({
                 <ModalHeader className="self-center font-bold text-3xl">
                     {t("car_rental.register_title")}
                 </ModalHeader>
-                <ModalBody>
+                <ModalBody className="px-0 md:px-6">
                     <CreateRentalContractForm
                         isCustomer={isCustomer}
                         isStaff={isStaff}

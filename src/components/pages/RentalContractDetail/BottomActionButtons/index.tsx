@@ -21,7 +21,7 @@ interface BottomActionButtonsProps {
     isCustomer: boolean
     contract: RentalContractViewRes
     handoverFormik: ReturnType<typeof useFormik<HandoverContractReq>>
-    hanoverChecklist: VehicleChecklistViewRes | undefined
+    handoverChecklist: VehicleChecklistViewRes | undefined
 }
 
 export function BottomActionButtons({
@@ -29,7 +29,7 @@ export function BottomActionButtons({
     isCustomer,
     contract,
     handoverFormik,
-    hanoverChecklist
+    handoverChecklist
 }: BottomActionButtonsProps) {
     const { t } = useTranslation()
 
@@ -92,7 +92,9 @@ export function BottomActionButtons({
                         isDisabled={
                             !handoverFormik.isValid ||
                             handoverFormik.isSubmitting ||
-                            !hanoverChecklist
+                            !handoverChecklist ||
+                            !handoverChecklist.isSignedByCustomer ||
+                            !handoverChecklist.isSignedByStaff
                         }
                         onPress={() => handoverFormik.handleSubmit()}
                     >

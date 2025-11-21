@@ -1,32 +1,24 @@
 "use client"
 
 import { RoleName } from "@/constants/enum"
-import { useGetMe } from "@/hooks"
-// import { addToast } from "@heroui/toast"
+import { useGetMe, useTokenStore } from "@/hooks"
 import { useRouter } from "next/navigation"
 import React, { useEffect } from "react"
-import { useTranslation } from "react-i18next"
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
     const router = useRouter()
-    const { t } = useTranslation()
-    const { data: user, isLoading, isError } = useGetMe({ enabled: true })
+    const isLogined = useTokenStore((s) => !!s.accessToken)
+    const { data: user, isLoading, isError } = useGetMe({ enabled: isLogined })
 
     const isAdmin = user?.role?.name === RoleName.Admin
 
     useEffect(() => {
         if (isLoading) return
 
-        if (isError || !isAdmin) {
-            // addToast({
-            //     title: t("toast.error"),
-            //     description: t("user.unauthorized"),
-            //     color: "danger"
-            // })
-
+        if (!isLogined || isError || !isAdmin) {
             router.replace("/")
         }
-    }, [isAdmin, isError, isLoading, router, t])
+    }, [isAdmin, isError, isLoading, isLogined, router])
 
     if (!isAdmin) return null
 

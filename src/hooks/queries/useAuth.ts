@@ -16,13 +16,13 @@ export const useLogin = ({
 }) => {
     const { t } = useTranslation()
     const setAccessToken = useTokenStore((s) => s.setAccessToken)
-    const invalidateAuthQuery = useInvalidateMeQuery()
+    const invalidateMeQuery = useInvalidateMeQuery()
 
     return useMutation({
         mutationFn: authApi.login,
         onSuccess: (data) => {
             setAccessToken(data.accessToken, rememberMe)
-            invalidateAuthQuery()
+            invalidateMeQuery()
             onSuccess?.()
             addToast({
                 title: t("toast.success"),
@@ -76,13 +76,13 @@ export const useLoginGoogle = ({
 }) => {
     const { t } = useTranslation()
     const setAccessToken = useTokenStore((s) => s.setAccessToken)
-    const invalidateAuthQuery = useInvalidateMeQuery()
+    const invalidateMeQuery = useInvalidateMeQuery()
 
     return useMutation({
         mutationFn: authApi.loginGoogle,
         onSuccess: (data) => {
             setAccessToken(data.accessToken, rememberMe)
-            invalidateAuthQuery()
+            invalidateMeQuery()
             onSuccess?.()
             addToast({
                 title: t("toast.success"),
@@ -136,13 +136,13 @@ export const useRegisterVerify = ({ onSuccess }: { onSuccess?: () => void }) => 
 export const useRegisterComplete = ({ onSuccess }: { onSuccess?: () => void }) => {
     const { t } = useTranslation()
     const setAccessToken = useTokenStore((s) => s.setAccessToken)
-    const invalidateAuthQuery = useInvalidateMeQuery()
+    const invalidateMeQuery = useInvalidateMeQuery()
 
     return useMutation({
         mutationFn: authApi.regsiterComplete,
         onSuccess: (data) => {
             setAccessToken(data.accessToken)
-            invalidateAuthQuery()
+            invalidateMeQuery()
             onSuccess?.()
             addToast({
                 title: t("toast.success"),

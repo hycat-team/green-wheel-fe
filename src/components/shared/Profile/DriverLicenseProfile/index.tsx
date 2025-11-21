@@ -107,6 +107,7 @@ export function DriverLicenseProfile({ user }: { user: UserProfileViewRes }) {
                     <div className="flex gap-2">
                         <EnumPicker
                             isReadOnly={!editable}
+                            isClearable={false}
                             label={t("user.sex")}
                             labels={SexLabels}
                             value={formik.values.sex}
@@ -115,6 +116,7 @@ export function DriverLicenseProfile({ user }: { user: UserProfileViewRes }) {
 
                         <EnumPicker
                             isReadOnly={!editable}
+                            isClearable={false}
                             label={t("user.class")}
                             labels={LicenseClassLabels}
                             value={formik.values.class}

@@ -57,6 +57,7 @@ import { cn } from "node_modules/@heroui/theme/dist/utils/cn"
 import { UserProfileViewRes } from "@/models/user/schema/response"
 import { RentalContractStatusColorMap } from "@/constants/colorMap"
 import { EyeIcon } from "lucide-react"
+import dayjs from "dayjs"
 
 function getChecklistDisplay(status?: RentalContractStatus) {
     const handoverStatuses = [
@@ -137,13 +138,14 @@ export function RentalContractDetail({
     const { isHandoverChecklistDisplay, isReturnChecklistDisplay } = getChecklistDisplay(
         contract?.status
     )
+    const isHandoverChecklistDisabled = dayjs().isBefore(contract?.startDate)
     const { data: checklists } = useGetAllVehicleChecklists({
         query: {
             contractId
         },
         pagination: {}
     })
-    const hanoverChecklist = useMemo(() => {
+    const handoverChecklist = useMemo(() => {
         return checklists?.items.find((item) => item.type === VehicleChecklistType.Handover)
     }, [checklists])
     const returnChecklist = useMemo(() => {
@@ -178,7 +180,7 @@ export function RentalContractDetail({
         !contract.invoices.find((item) => item.type == InvoiceType.Refund) &&
         getDiffDaysCeil({
             startDate: contract.actualEndDate,
-            endDate: new Date()
+            endDate: dayjs()
         }) >= refundCreationDelayDays.value
 
     //======================================= //
@@ -462,8 +464,9 @@ export function RentalContractDetail({
                     <ChecklistSection
                         isStaff={isStaffInStation}
                         isCustomer={isCustomer}
+                        isDisabled={isHandoverChecklistDisabled}
                         contract={contract}
-                        checklist={hanoverChecklist}
+                        checklist={handoverChecklist}
                         type={VehicleChecklistType.Handover}
                     />
                 )}
@@ -521,7 +524,7 @@ export function RentalContractDetail({
                     isStaff={isStaffInStation}
                     isCustomer={isCustomer}
                     handoverFormik={handoverFormik}
-                    hanoverChecklist={hanoverChecklist}
+                    handoverChecklist={handoverChecklist}
                 />
             </div>
         </motion.div>

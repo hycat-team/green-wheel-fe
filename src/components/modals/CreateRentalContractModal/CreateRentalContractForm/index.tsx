@@ -218,10 +218,10 @@ export const CreateRentalContractForm = ({
     })
 
     return (
-        <div className="max-h-[95vh] px-4 sm:px-6 lg:px-8">
+        <div className="px-1 sm:px-6 lg:px-8">
             {mounted ? (
                 <div className="mx-auto max-w-5xl bg-white rounded-lg ">
-                    <form onSubmit={formik.handleSubmit} className="px-6" noValidate>
+                    <form onSubmit={formik.handleSubmit} className="px-0 sm:px-6" noValidate>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                             {/* Cột trái */}
                             <div>

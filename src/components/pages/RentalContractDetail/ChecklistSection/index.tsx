@@ -11,6 +11,7 @@ import { useTranslation } from "react-i18next"
 interface ChecklistSectionProps {
     isStaff: boolean
     isCustomer?: boolean
+    isDisabled?: boolean
     contract: RentalContractViewRes
     checklist?: VehicleChecklistViewRes
     type: VehicleChecklistType
@@ -19,6 +20,7 @@ interface ChecklistSectionProps {
 export function ChecklistSection({
     isStaff,
     isCustomer = false,
+    isDisabled = false,
     contract,
     checklist,
     type
@@ -74,7 +76,7 @@ export function ChecklistSection({
         <div className="flex gap-4">
             {!checklist ? (
                 isStaff && (
-                    <ButtonStyled onPress={handleCreateVehicleChecklist}>
+                    <ButtonStyled onPress={handleCreateVehicleChecklist} isDisabled={isDisabled}>
                         {createVehicleChecklist.isPending ? <Spinner /> : <div>{createLabel}</div>}
                     </ButtonStyled>
                 )
