@@ -1,7 +1,7 @@
 import {
     CreateVehicleReq,
     GetVehicleParams,
-    UpdateVehicleReq,
+    UpdateVehicleReq
 } from "@/models/vehicle/schema/request"
 import { VehicleViewRes } from "@/models/vehicle/schema/response"
 import { PaginationParams } from "@/models/common/request"
@@ -10,11 +10,14 @@ import axiosInstance from "@/utils/axios"
 import { buildQueryParams, requestWrapper } from "@/utils/helpers/axiosHelper"
 
 export const vehicleApi = {
-    getAll: ({ params = {}, pagination = {} }: { params?: GetVehicleParams; pagination?: PaginationParams } = {}) =>
+    getAll: ({
+        params = {},
+        pagination = {}
+    }: { params?: GetVehicleParams; pagination?: PaginationParams } = {}) =>
         requestWrapper<PageResult<VehicleViewRes>>(async () => {
             const query = {
                 ...buildQueryParams(params),
-                ...buildQueryParams(pagination),
+                ...buildQueryParams(pagination)
             }
             const res = await axiosInstance.get("/vehicles", { params: query })
             return res.data
@@ -37,5 +40,9 @@ export const vehicleApi = {
     delete: (vehicleId: string) =>
         requestWrapper<void>(async () => {
             await axiosInstance.delete(`/vehicles/${vehicleId}`)
+        }),
+    completeMaintenance: ({ vehicleId }: { vehicleId: string }) =>
+        requestWrapper<void>(async () => {
+            await axiosInstance.put(`/vehicles/${vehicleId}/maintenance-complete`)
         })
 }

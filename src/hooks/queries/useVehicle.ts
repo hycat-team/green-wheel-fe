@@ -146,3 +146,35 @@ export const useDeleteVehicle = ({
         }
     })
 }
+
+export const useCompleteMaintenanceVehicle = ({
+    onSuccess,
+    onError
+}: {
+    onSuccess?: () => void
+    onError?: () => void
+} = {}) => {
+    const { t } = useTranslation()
+    const queryClient = useQueryClient()
+
+    return useMutation({
+        mutationFn: vehicleApi.completeMaintenance,
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: QUERY_KEYS.VEHICLES, exact: false })
+            addToast({
+                title: t("toast.success"),
+                description: t("success.update"),
+                color: "success"
+            })
+            onSuccess?.()
+        },
+        onError: (error: BackendError) => {
+            addToast({
+                title: error.title || t("toast.error"),
+                description: translateWithFallback(t, error.detail),
+                color: "danger"
+            })
+            onError?.()
+        }
+    })
+}

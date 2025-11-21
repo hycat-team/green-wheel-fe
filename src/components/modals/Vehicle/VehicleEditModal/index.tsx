@@ -126,6 +126,7 @@ export function VehicleEditModal({
                             }
                             disallowEmptySelection={false}
                             isClearable={false}
+                            isDisabled={true}
                             onSelectionChange={(keys) => {
                                 if (keys === "all") {
                                     formik.setFieldValue("status", null)

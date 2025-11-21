@@ -344,7 +344,10 @@
         "status_value_maintenance": "Maintenance",
         "status_value_missingnoreason": "Missing (no reason)",
         "status_value_latereturn": "Late return",
-        "status_value_unknown": "Unknown"
+        "status_value_unknown": "Unknown",
+
+        "maintenance_complete": "Maintenance complete",
+        "invalid_status_for_maintenance_complete": "Invalid status for maintenance complete"
     },
     "vehicle_segment": {
         "not_found": "Vehicle segment not found",
@@ -1295,6 +1298,7 @@
         "for_more_information": "for more information"
     },
     "errors": {
+        "go_home": "Go home",
         "not_found": "Oops! Page Not Found",
         "not_found_description": "The page you’re looking for might have been moved or deleted."
     },

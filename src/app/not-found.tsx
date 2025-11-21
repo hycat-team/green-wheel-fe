@@ -51,7 +51,7 @@ export default function NotFound() {
                     >
                         <Link href="/">
                             <ButtonStyled className="px-6 py-3 rounded-xl text-base font-semibold shadow-md bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 transition-all">
-                                Go Home
+                                {t("errors.go_home")}
                             </ButtonStyled>
                         </Link>
                     </motion.div>

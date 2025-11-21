@@ -64,7 +64,13 @@ const STATUS_VALUES = Object.values(VehicleStatus).filter(
     (v): v is VehicleStatus => typeof v === "number"
 )
 
-export function AdminVehicleManagementView({ myStation }: { myStation: StationViewRes }) {
+export function VehicleManagementView({
+    isStaff,
+    myStation
+}: {
+    isStaff: boolean
+    myStation: StationViewRes
+}) {
     const { t } = useTranslation()
 
     // ==== local state ====
@@ -418,6 +424,8 @@ export function AdminVehicleManagementView({ myStation }: { myStation: StationVi
             {/* table */}
             <TableVehicleManagement
                 vehicles={vehicles}
+                isStaff={isStaff}
+                myStation={myStation}
                 stationNameById={stationNameById}
                 vehicleModelsById={vehicleModelsById}
                 isLoading={isFetchingVehicles}
@@ -490,4 +498,4 @@ export function AdminVehicleManagementView({ myStation }: { myStation: StationVi
     )
 }
 
-export default AdminVehicleManagementView
+export default VehicleManagementView

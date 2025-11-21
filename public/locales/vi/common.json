@@ -344,7 +344,10 @@
         "status_value_maintenance": "Bảo trì",
         "status_value_missingnoreason": "Mất (không lý do)",
         "status_value_latereturn": "Trả muộn",
-        "status_value_unknown": "Không xác định"
+        "status_value_unknown": "Không xác định",
+
+        "maintenance_complete": "Hoàn thành bảo trì",
+        "invalid_status_for_maintenance_complete": "Trạng thái không hợp lệ để hoàn thành bảo trì"
     },
     "vehicle_segment": {
         "not_found": "Không tìm thấy phân khúc xe",
@@ -1295,6 +1298,7 @@
         "for_more_information": "để biết thêm thông tin"
     },
     "errors": {
+        "go_home": "Về trang chủ",
         "not_found": "Ôi! Không tìm thấy trang",
         "not_found_description": "Trang bạn đang tìm có thể đã bị di chuyển hoặc xóa."
     },

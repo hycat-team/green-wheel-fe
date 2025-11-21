@@ -15,12 +15,16 @@ import {
 
 import { VehicleStatus } from "@/constants/enum"
 import { VehicleModelViewRes, VehicleViewRes } from "@/models/vehicle/schema/response"
-import { ButtonIconStyled } from "@/components/styled"
+import { ButtonIconStyled, ButtonStyled } from "@/components/styled"
+import { useCompleteMaintenanceVehicle } from "@/hooks"
+import { StationViewRes } from "@/models/station/schema/response"
 
 type VehicleWithStatus = VehicleViewRes & { status?: VehicleStatus; modelId?: string }
 
 type TableVehicleManagementProps = {
     vehicles: VehicleWithStatus[]
+    isStaff: boolean
+    myStation: StationViewRes
     stationNameById: Record<string, string>
     vehicleModelsById: Record<string, VehicleModelViewRes>
     isLoading?: boolean
@@ -71,6 +75,8 @@ function getStatusClasses(status: VehicleWithStatus["status"]) {
 
 export function TableVehicleManagement({
     vehicles,
+    isStaff,
+    myStation,
     stationNameById,
     isLoading,
     vehicleModelsById,
@@ -79,6 +85,7 @@ export function TableVehicleManagement({
     onDelete
 }: TableVehicleManagementProps) {
     const { t } = useTranslation()
+    const completeMaintenance = useCompleteMaintenanceVehicle()
 
     const tUnsafe = t as unknown as (key: string, options?: any) => string
 
@@ -86,6 +93,8 @@ export function TableVehicleManagement({
 
     const tableRows = useMemo(() => {
         return vehicles.map((vehicle) => {
+            const isEditable = myStation.id === vehicle.stationId
+
             const resolvedModel = resolveModel(vehicle, vehicleModelsById)
             const statusKey = getStatusKey(vehicle.status)
             const normalizedStatusKey = statusKey?.toString().toLowerCase()
@@ -136,29 +145,63 @@ export function TableVehicleManagement({
                     </TableCell>
 
                     <TableCell>
-                        <div className="flex items-center gap-3">
-                            <ButtonIconStyled
-                                aria-label={t("common.edit")}
-                                onPress={() => onEdit?.(vehicle)}
-                                className="rounded-full bg-primary/10 text-primary transition hover:bg-primary/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
-                            >
-                                <PencilSimple size={16} weight="bold" aria-hidden />
-                            </ButtonIconStyled>
+                        {isStaff ? (
+                            <div className="flex items-center gap-3">
+                                {vehicle.status === VehicleStatus.Maintenance && (
+                                    <ButtonStyled
+                                        variant="ghost"
+                                        color="primary"
+                                        isDisabled={!isEditable || completeMaintenance.isPending}
+                                        onPress={() =>
+                                            completeMaintenance.mutate({ vehicleId: vehicle.id })
+                                        }
+                                    >
+                                        {t("vehicle.maintenance_complete")}
+                                    </ButtonStyled>
+                                )}
+                            </div>
+                        ) : (
+                            <div className="flex items-center gap-3">
+                                <ButtonIconStyled
+                                    aria-label={t("common.edit")}
+                                    isDisabled={!isEditable}
+                                    onPress={() => onEdit?.(vehicle)}
+                                    className="rounded-full bg-primary/10 text-primary transition hover:bg-primary/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+                                >
+                                    <PencilSimple size={16} weight="bold" aria-hidden />
+                                </ButtonIconStyled>
 
-                            <ButtonIconStyled
-                                aria-label={t("common.delete")}
-                                isDisabled={isLoading || vehicle.status !== VehicleStatus.Available}
-                                onPress={() => onDelete?.(vehicle)}
-                                className="rounded-full bg-rose-50 text-rose-600 transition hover:bg-rose-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose-500 focus-visible:ring-offset-2"
-                            >
-                                <TrashSimple size={16} weight="bold" aria-hidden />
-                            </ButtonIconStyled>
-                        </div>
+                                <ButtonIconStyled
+                                    aria-label={t("common.delete")}
+                                    isDisabled={
+                                        !isEditable ||
+                                        isLoading ||
+                                        vehicle.status !== VehicleStatus.Available
+                                    }
+                                    onPress={() => onDelete?.(vehicle)}
+                                    className="rounded-full bg-rose-50 text-rose-600 transition hover:bg-rose-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose-500 focus-visible:ring-offset-2"
+                                >
+                                    <TrashSimple size={16} weight="bold" aria-hidden />
+                                </ButtonIconStyled>
+                            </div>
+                        )}
                     </TableCell>
                 </TableRow>
             )
         })
-    }, [vehicles, vehicleModelsById, t, tUnsafe, stationNameById, isLoading, onEdit, onDelete])
+    }, [
+        completeMaintenance,
+        isLoading,
+        isStaff,
+        myStation.id,
+        onDelete,
+        onEdit,
+        stationNameById,
+        t,
+        tUnsafe,
+        vehicleModelsById,
+        vehicles
+    ])
 
     return (
         <div className="overflow-x-auto rounded-2xl border border-slate-200 bg-white">
