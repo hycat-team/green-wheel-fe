@@ -9,6 +9,7 @@ import { profileApi } from "@/services/profileApi"
 import { CitizenIdentityViewRes } from "@/models/citizen-identity/schema/response"
 import { DriverLicenseViewRes } from "@/models/driver-license/schema/response"
 import { addToast } from "@heroui/toast"
+import { useTokenStore } from "../singleton"
 
 export const useInvalidateMeQuery = () => {
     const queryClient = useQueryClient()
@@ -22,11 +23,13 @@ export const useRemoveMeQuery = () => {
     return () => queryClient.removeQueries({ queryKey: QUERY_KEYS.ME })
 }
 
-export const useGetMe = ({ enabled = true }: { enabled?: boolean } = {}) => {
+export const useGetMe = () => {
+    const isLogined = useTokenStore((s) => !!s.accessToken)
+
     const query = useQuery({
         queryKey: QUERY_KEYS.ME,
         queryFn: profileApi.getMe,
-        enabled,
+        enabled: isLogined,
         staleTime: 14 * 60 * 1000,
         refetchOnMount: false,
         refetchOnWindowFocus: false

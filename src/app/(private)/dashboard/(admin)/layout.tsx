@@ -8,7 +8,7 @@ import React, { useEffect } from "react"
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
     const router = useRouter()
     const isLogined = useTokenStore((s) => !!s.accessToken)
-    const { data: user, isLoading, isError } = useGetMe({ enabled: isLogined })
+    const { data: user, isLoading, isError } = useGetMe()
 
     const isAdmin = user?.role?.name === RoleName.Admin
 

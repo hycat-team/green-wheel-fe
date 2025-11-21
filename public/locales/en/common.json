@@ -516,6 +516,7 @@
         "start_date_require": "Please select date and time to pick up the car",
         "invalid_start_date_range": "Vehicle pick-up date must be between 7 AM - 5 PM",
         "invalid_start_date": "Pick-up time must be at least 3 hours from now and within 7 AM - 5 PM",
+        "invalid_start_date_staff": "Pick-up time must be at least 30 minutes from now and within 7 AM - 5 PM",
         "return_date_require": "Please select return date and time",
         "invalid_end_date_range": "Vehicle return date must be between 7 AM - 5 PM",
         "min_end_date": "The return day must be after the pick-up day at least 24 hours",
@@ -811,6 +812,7 @@
         "rental_duration": "Rental duration",
         "start_date": "Start date",
         "start_date_must_be_future": "Pick-up time must be at least 3 hours from now and within 7 AM - 5 PM",
+        "start_date_must_be_future_staff": "Pick-up time must be at least 30 minutes from now and within 7 AM - 5 PM",
         "actual_start_date": "Actual start date",
         "end_date": "End date",
         "end_date_must_be_after_start": "The return day must be after the pick-up day at least 24 hours",
@@ -821,6 +823,7 @@
         "payment_invoice_list": "Payment invoice list",
         "create_at": "Created at",
         "user_already_have_contract": "You can only have one pending or active booking at a time",
+        "notes_too_long": "Notes cannot be longer than 255 characters",
         "not_found": "Rental Booking not found",
         "already_process": "This Rental Booking has already been processed.",
         "can_not_cancel": "This Rental Booking can not be cancelled",
@@ -833,7 +836,7 @@
         "invalid_vehicle_status": "Invalid vehicle status",
         "model_id_required": "Model is required",
         "station_id_required": "Station is required",
-        "at_least_one_party_must_sign": "At least one party must sign",
+        "at_least_one_party_must_sign": "At least one party must confirm",
         "not_start_yet": "This booking is not start yet"
     },
     "invoice": {
@@ -895,7 +898,8 @@
         "upload_image": "Upload Invoice image",
         "deducted_reservation_fee": "Deducted reservation fee",
         "tax_amount": "Tax amount",
-        "reservation_fee_deduction": "If a reservation payment has been made, the handover invoice will deduct the reservation fee from the total amount.\nHowever, if no reservation payment was made and the vehicle handover is paid directly, the reservation invoice will be canceled and no deduction will be applied to the handover fee."
+        "reservation_fee_deduction": "If a reservation payment has been made, the handover invoice will deduct the reservation fee from the total amount.\nHowever, if no reservation payment was made and the vehicle handover is paid directly, the reservation invoice will be canceled and no deduction will be applied to the handover fee.",
+        "invalid_refund_time": "The refund invoice can be created at least 10 days after the actual end date"
     },
     "momo": {
         "invalid_signature": "Invalid signature",

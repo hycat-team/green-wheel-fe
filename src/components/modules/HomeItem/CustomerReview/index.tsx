@@ -17,7 +17,7 @@ export function CustomerReview() {
     const { t } = useTranslation()
 
     const isLogined = useTokenStore((s) => !!s.accessToken)
-    const { data: user } = useGetMe({ enabled: isLogined })
+    const { data: user } = useGetMe()
     const { data: station, isLoading: isStationLoading } = useGetAllStations()
 
     // Infinite scroll state

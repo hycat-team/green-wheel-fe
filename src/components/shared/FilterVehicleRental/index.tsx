@@ -17,22 +17,30 @@ import { SearchModelParams } from "@/models/vehicle/schema/request"
 import { debouncedWrapper } from "@/utils/helpers/axiosHelper"
 import { addToast } from "@heroui/toast"
 
-function calcDates() {
+function calcDates(isStaff: boolean) {
     const zonedNow = fromDate(new Date(), DEFAULT_TIMEZONE)
-    const isAfterMax = zonedNow.hour + 3 >= MAX_HOUR
-    const isBeforeMin = zonedNow.hour + 3 < MIN_HOUR
+
+    const requiredNow = isStaff ? zonedNow.add({ minutes: 30 }) : zonedNow.add({ hours: 3 })
+
+    const isAfterMax = requiredNow.hour >= MAX_HOUR
+    const isBeforeMin = requiredNow.hour < MIN_HOUR
 
     const initialStart =
         isBeforeMin || isAfterMax
             ? zonedNow
-                  .add({ days: isAfterMax ? 1 : 0 })
                   .set({ hour: MIN_HOUR, minute: 0, second: 0, millisecond: 0 })
-            : zonedNow.set({
-                  hour: zonedNow.hour + 3,
-                  minute: Math.ceil(zonedNow.minute / 5) * 5,
-                  second: 0,
-                  millisecond: 0
-              })
+                  .add({ days: isAfterMax ? 1 : 0 })
+            : zonedNow
+                  .set({
+                      hour: zonedNow.hour,
+                      minute: Math.ceil(zonedNow.minute / 5) * 5,
+                      second: 0,
+                      millisecond: 0
+                  })
+                  .add({
+                      hours: isStaff ? 0 : 3,
+                      minutes: isStaff ? 30 : 0
+                  })
 
     return {
         minStartDate: initialStart,
@@ -42,17 +50,20 @@ function calcDates() {
 
 export function FilterVehicleRental({
     className = "",
+    isStaff,
     setIsSearching
 }: {
     className?: string
+    isStaff: boolean
     setIsSearching: (isSearching: boolean) => void
 }) {
     const { t } = useTranslation()
     const { formatDateTime, toZonedDateTime, normalizeDateByMinuteStep } = useDay()
+
     // setup date time
-    const [{ minStartDate, minEndDate }, setDates] = useState(() => calcDates())
+    const [{ minStartDate, minEndDate }, setDates] = useState(() => calcDates(isStaff))
     useEffect(() => {
-        const updateDates = () => setDates(calcDates)
+        const updateDates = () => setDates(calcDates(isStaff))
         updateDates()
 
         const now = new Date()
@@ -61,14 +72,17 @@ export function FilterVehicleRental({
         const timeout = setTimeout(() => {
             updateDates()
             const interval = setInterval(updateDates, 60000)
-            // cleanup
-            cleanup = () => clearInterval(interval)
+
+            intervalCleanup = () => clearInterval(interval)
         }, delay)
 
-        let cleanup = () => clearTimeout(timeout)
+        let intervalCleanup: () => void = () => {}
 
-        return () => cleanup()
-    }, [])
+        return () => {
+            clearTimeout(timeout)
+            intervalCleanup()
+        }
+    }, [isStaff])
 
     const {
         data: stations,
@@ -169,7 +183,9 @@ export function FilterVehicleRental({
                     .required(t("vehicle_filter.start_date_require"))
                     .test(
                         "is-valid-start-date",
-                        t("vehicle_filter.invalid_start_date"),
+                        !isStaff
+                            ? t("vehicle_filter.invalid_start_date")
+                            : t("vehicle_filter.invalid_start_date_staff"),
                         (value) => {
                             const valueDatetime = toZonedDateTime(value)
                             return (
@@ -209,7 +225,7 @@ export function FilterVehicleRental({
                         }
                     )
             }),
-        [minStartDate, t, toZonedDateTime]
+        [isStaff, minStartDate, t, toZonedDateTime]
     )
 
     //  useFormik

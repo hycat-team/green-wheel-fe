@@ -516,6 +516,7 @@
         "start_date_require": "Vui lòng chọn ngày và giờ nhận xe",
         "invalid_start_date_range": "Ngày nhận xe phải trong khoảng 7 AM - 5 PM",
         "invalid_start_date": "Thời gian nhận xe phải cách hiện tại ít nhất 3 giờ và trong khoảng 7 AM - 5 PM",
+        "invalid_start_date_staff": "Thời gian nhận xe phải cách hiện tại ít nhất 30 phút và trong khoảng 7 AM - 5 PM",
         "return_date_require": "Vui lòng chọn ngày và giờ trả xe",
         "invalid_end_date_range": "Ngày trả xe phải trong khoảng 7 AM - 5 PM",
         "min_end_date": "Ngày trả phải sau ngày nhận ít nhất 24 giờ",
@@ -810,7 +811,8 @@
         "contract_description": "Mô tả thuê xe",
         "rental_duration": "Thời gian thuê",
         "start_date": "Ngày bắt đầu",
-        "start_date_must_be_future": "Thời gian nhận xe phải cách ít nhất 3 giờ và trong khoảng 7 AM - 5 PM",
+        "start_date_must_be_future": "Thời gian nhận xe phải cách hiện tại ít nhất 3 giờ và trong khoảng 7 AM - 5 PM",
+        "start_date_must_be_future_staff": "Thời gian nhận xe phải cách hiện tại ít nhất 30 phút và trong khoảng 7 AM - 5 PM",
         "actual_start_date": "Ngày bắt đầu thực tế",
         "end_date": "Ngày kết thúc",
         "end_date_must_be_after_start": "Ngày trả xe phải sau ngày nhận ít nhất 24 giờ",
@@ -821,6 +823,7 @@
         "payment_invoice_list": "Danh sách hóa đơn thanh toán",
         "create_at": "Ngày tạo",
         "user_already_have_contract": "Bạn chỉ có thể có một thuê xe đang chờ hoặc đang hoạt động tại một thời điểm",
+        "notes_too_long": "Ghi chú không được vượt quá 255 kí tự",
         "not_found": "Không tìm thấy thuê xe",
         "already_process": "Đơn thuê xe này đã được xử lý.",
         "can_not_cancel": "Đơn thuê xe này không thể hủy",
@@ -833,7 +836,7 @@
         "invalid_vehicle_status": "Trạng thái xe không hợp lệ",
         "model_id_required": "Mẫu xe là bắt buộc",
         "station_id_required": "Trạm là bắt buộc",
-        "at_least_one_party_must_sign": "Ít nhất một bên phải ký",
+        "at_least_one_party_must_sign": "Ít nhất một bên phải xác nhận",
         "not_start_yet": "Đơn thuê xe này chưa bắt đầu"
     },
     "invoice": {
@@ -895,7 +898,8 @@
         "upload_image": "Tải hình hóa đơn lên",
         "deducted_reservation_fee": "Trừ phí đặt trước",
         "tax_amount": "Số tiền thuế",
-        "reservation_fee_deduction": "Nếu khách đã thanh toán phí đặt trước, hóa đơn bàn giao sẽ trừ phí đặt trước khỏi tổng tiền.\nTuy nhiên, nếu không thanh toán phí đặt trước và thanh toán trực tiếp khi nhận xe, hóa đơn đặt trước sẽ bị hủy và không áp dụng trừ vào phí bàn giao."
+        "reservation_fee_deduction": "Nếu khách đã thanh toán phí đặt trước, hóa đơn bàn giao sẽ trừ phí đặt trước khỏi tổng tiền.\nTuy nhiên, nếu không thanh toán phí đặt trước và thanh toán trực tiếp khi nhận xe, hóa đơn đặt trước sẽ bị hủy và không áp dụng trừ vào phí bàn giao.",
+        "invalid_refund_time": "Thời gian tạo hoá đơn hoàn tiền phải cách ngày trả xe thực tế ít nhất 10 ngày"
     },
     "momo": {
         "invalid_signature": "Chữ ký không hợp lệ",

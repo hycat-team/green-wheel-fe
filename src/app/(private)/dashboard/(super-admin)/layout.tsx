@@ -8,7 +8,7 @@ import React, { useEffect } from "react"
 export default function SuperAdminLayout({ children }: { children: React.ReactNode }) {
     const router = useRouter()
     const isLogined = useTokenStore((s) => !!s.accessToken)
-    const { data: user, isLoading, isError } = useGetMe({ enabled: isLogined })
+    const { data: user, isLoading, isError } = useGetMe()
 
     const isSuperAdmin = user?.role?.name === RoleName.SuperAdmin
 

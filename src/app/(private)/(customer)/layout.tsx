@@ -12,19 +12,13 @@ import { useTranslation } from "react-i18next"
 export default function CustomerLayout({ children }: { children: React.ReactNode }) {
     const router = useRouter()
     const { t } = useTranslation()
-    const { data: user, isLoading, isError } = useGetMe({ enabled: true })
+    const { data: user, isLoading, isError } = useGetMe()
 
     const isCustomer = user?.role?.name === RoleName.Customer
 
     useEffect(() => {
         if (isLoading) return
         if (isError || !isCustomer) {
-            // addToast({
-            //     title: t("toast.error"),
-            //     description: t("user.unauthorized"),
-            //     color: "danger"
-            // })
-
             router.replace("/")
         }
     }, [isCustomer, isError, isLoading, router, t])

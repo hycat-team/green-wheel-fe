@@ -10,7 +10,7 @@ import { useTranslation } from "react-i18next"
 export default function DispatchLayout({ children }: { children: React.ReactNode }) {
     const router = useRouter()
     const { t } = useTranslation()
-    const { data: user, isLoading, isError } = useGetMe({ enabled: true })
+    const { data: user, isLoading, isError } = useGetMe()
 
     const isSuperAdmin = user?.role?.name === RoleName.SuperAdmin
     const isAdmin = user?.role?.name === RoleName.Admin
@@ -19,12 +19,6 @@ export default function DispatchLayout({ children }: { children: React.ReactNode
         if (isLoading) return
 
         if (isError || (!isAdmin && !isSuperAdmin)) {
-            // addToast({
-            //     title: t("toast.error"),
-            //     description: t("user.unauthorized"),
-            //     color: "danger"
-            // })
-
             router.replace("/")
         }
     }, [isAdmin, isError, isLoading, isSuperAdmin, router, t])

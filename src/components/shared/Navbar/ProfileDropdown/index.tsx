@@ -4,7 +4,7 @@ import React, { useCallback } from "react"
 import { DropdownTrigger, DropdownMenu, DropdownItem, User, Spinner } from "@heroui/react"
 import { useTranslation } from "react-i18next"
 import { DropdownStyled } from "@/components"
-import { useGetMe, useLogout, useTokenStore } from "@/hooks"
+import { useGetMe, useLogout } from "@/hooks"
 import Link from "next/link"
 import { DEFAULT_AVATAR_URL } from "@/constants/constants"
 import { useRouter } from "next/navigation"
@@ -59,13 +59,8 @@ export function ProfileDropdown({ onOpen = undefined }: { onOpen?: () => void })
     const { t } = useTranslation()
     const router = useRouter()
     const logoutMutation = useLogout({ onSuccess: () => router.replace("/") })
-    const isLoggedIn = useTokenStore((s) => !!s.accessToken)
 
-    const {
-        data: user,
-        isLoading: isGetMeLoading,
-        isError: isGetMeError
-    } = useGetMe({ enabled: isLoggedIn })
+    const { data: user, isLoading: isGetMeLoading, isError: isGetMeError } = useGetMe()
 
     const defaultItems: DropdownLinkItem[] = [
         {

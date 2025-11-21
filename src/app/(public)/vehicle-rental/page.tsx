@@ -1,19 +1,24 @@
 "use client"
 
-import { FilterVehicleRental, CardVehicalStyled } from "@/components"
-import { useBookingFilterStore } from "@/hooks"
+import { FilterVehicleRental, CardVehicalStyled, SpinnerStyled } from "@/components"
+import { useBookingFilterStore, useGetMe } from "@/hooks"
 import { Spinner } from "@heroui/react"
 import Link from "next/link"
 import React, { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { useTranslation } from "react-i18next"
+import { RoleName } from "@/constants/enum"
 
 export default function VehicleModelsPage() {
     const { t } = useTranslation()
     const [isSearching, setIsSearching] = useState(false)
     const vehicleModels = useBookingFilterStore((s) => s.filteredVehicleModels)
+    const { data: user, isLoading } = useGetMe()
+    const isStaff = user?.role?.name === RoleName.Staff
 
     const isEmpty = !vehicleModels || vehicleModels.length === 0
+
+    if (isLoading) return <SpinnerStyled />
 
     return (
         <div className="min-h-[80vh] max-w-screen-xl mx-auto p-6 text-center">
@@ -22,7 +27,7 @@ export default function VehicleModelsPage() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.4, ease: "easeOut" }}
             >
-                <FilterVehicleRental setIsSearching={setIsSearching} />
+                <FilterVehicleRental setIsSearching={setIsSearching} isStaff={isStaff} />
             </motion.div>
 
             <div className="mt-10">

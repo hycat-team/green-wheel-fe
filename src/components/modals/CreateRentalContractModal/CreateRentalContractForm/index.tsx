@@ -74,11 +74,7 @@ export const CreateRentalContractForm = ({
     const createContract = useCreateRentalContract({ onSuccess })
     const createContractManual = useCreateContractManual({ onSuccess })
 
-    const {
-        data: userMe,
-        isLoading: isUserLoading,
-        error: userError
-    } = useGetMe({ enabled: isCustomer })
+    const { data: userMe, isLoading: isUserLoading, error: userError } = useGetMe()
 
     const {
         data: stations,
