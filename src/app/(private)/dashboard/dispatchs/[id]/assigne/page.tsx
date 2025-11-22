@@ -92,7 +92,7 @@ export default function DispatchAssignPage() {
                     className="btn-gradient px-6 py-2"
                     onPress={onOpen}
                 >
-                    {updateMutation.isPending ? <Spinner color="white" /> : t("dispatch.approve")}
+                    {updateMutation.isPending ? <Spinner color="white" /> : t("enum.assign")}
                 </ButtonStyled>
                 <AlertModal
                     header={t("common.confirm_to_submit")}
