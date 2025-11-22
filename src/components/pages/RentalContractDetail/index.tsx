@@ -139,7 +139,7 @@ export function RentalContractDetail({
     const { isHandoverChecklistDisplay, isReturnChecklistDisplay } = getChecklistDisplay(
         contract?.status
     )
-    const isHandoverChecklistDisabled = dayjs().isBefore(contract?.startDate)
+    const isHandoverChecklistDisabled = dayjs().isBefore(dayjs(contract?.startDate).add(-1, "hour"))
     const { data: checklists } = useGetAllVehicleChecklists({
         query: {
             contractId
