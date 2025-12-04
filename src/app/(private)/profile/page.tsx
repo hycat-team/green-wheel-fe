@@ -114,6 +114,13 @@ export default function ProfilePage() {
                             className="flex flex-col gap-2 w-full"
                         >
                             <InputStyled
+                                isReadOnly={true}
+                                label={t("auth.email")}
+                                variant="bordered"
+                                value={user.email || "-"}
+                            />
+
+                            <InputStyled
                                 isReadOnly={!editable}
                                 label={t("user.last_name")}
                                 variant="bordered"
